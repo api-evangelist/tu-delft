@@ -1,0 +1,57 @@
+---
+name: Delft University of Technology
+description: Delft University of Technology public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/tu-delft/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 3
+    summary: >-
+      TU Delft's strongest public API surface is research-data infrastructure:
+      the 4TU.ResearchData repository (data.4tu.nl) exposes a documented public
+      REST API (v2/v3, open-source "djehuty") plus OAI-PMH, and the TU Delft
+      Repository publishes CC0 metadata via OAI-PMH. A NetID/OAuth2 SSO identity
+      service is live. The general institutional API platform (api.tudelft.nl)
+      is real and documented (campus/courses/education) but has been publicly
+      announced as suspended with no new client registrations and did not
+      resolve from this environment, so it is cataloged as legacy/gated. No
+      fabricated endpoints: data.4tu.nl REST endpoints and djehuty/repository
+      docs were verified live; api.tudelft.nl/apidoc.tudelft.nl did not resolve
+      (status 0) and are reported as such. There is no single official TU Delft
+      developer portal or GitHub org (research code lives under 4TUResearchData
+      and other faculty orgs).
+    endpoints:
+      - url: https://www.tudelft.nl/
+        status: 200
+        note: Official institution website, resolves.
+      - url: https://data.4tu.nl/
+        status: 200
+        note: 4TU.ResearchData repository home, live.
+      - url: https://data.4tu.nl/v2/articles
+        status: 200
+        note: Public REST API v2 articles endpoint, live.
+      - url: https://data.4tu.nl/v3/datasets
+        status: 200
+        note: Public REST API v3 datasets endpoint, live.
+      - url: https://djehuty.4tu.nl/
+        status: 200
+        note: Djehuty repository/API documentation, live.
+      - url: https://github.com/4TUResearchData/djehuty
+        status: 200
+        note: Open-source repository platform source, live.
+      - url: https://repository.tudelft.nl/
+        status: 200
+        note: TU Delft institutional repository, live (OAI-PMH metadata, CC0).
+      - url: https://login.tudelft.nl/
+        status: 200
+        note: TU Delft NetID single sign-on, live.
+      - url: https://api.tudelft.nl/cms/developers-guide/oauth2/
+        status: 0
+        note: Legacy institutional API OAuth2 guide; did not resolve from this environment; publicly announced as being suspended.
+      - url: https://apidoc.tudelft.nl/
+        status: 0
+        note: Legacy institutional API docs; did not resolve from this environment.
+      - url: https://www.linkedin.com/school/tu-delft/
+        status: 999
+        note: LinkedIn school page exists; 999 is LinkedIn bot-block, page is valid.
