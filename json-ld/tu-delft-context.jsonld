@@ -1,0 +1,58 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "tudelft": "https://www.tudelft.nl/ns#",
+    "schema": "https://schema.org/",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "sameAs": "schema:sameAs",
+    "identifier": "schema:identifier",
+    "foundingDate": "schema:foundingDate",
+    "location": "schema:location",
+    "provider": "schema:provider",
+    "dataset": "schema:Dataset",
+    "collection": "schema:CollectionPage",
+    "author": "schema:author",
+    "license": "schema:license",
+    "category": "schema:category",
+    "doi": "schema:identifier",
+    "repository": "tudelft:repository",
+    "api": "tudelft:api"
+  },
+  "@type": "CollegeOrUniversity",
+  "@id": "https://www.tudelft.nl/",
+  "name": "Delft University of Technology",
+  "url": "https://www.tudelft.nl/",
+  "description": "The largest and oldest public technical university in the Netherlands. Its public developer footprint centers on research and library data infrastructure, including the 4TU.ResearchData repository and the TU Delft Repository.",
+  "foundingDate": "1842",
+  "location": {
+    "@type": "Place",
+    "name": "Delft, Netherlands"
+  },
+  "sameAs": [
+    "https://github.com/4TUResearchData",
+    "https://www.linkedin.com/school/tu-delft/"
+  ],
+  "provider": [
+    {
+      "@type": "WebAPI",
+      "name": "4TU.ResearchData API",
+      "url": "https://djehuty.4tu.nl/",
+      "description": "Public REST API for the 4TU.ResearchData repository (data.4tu.nl), exposing published datasets, collections, categories, licenses and author records via the open-source djehuty platform.",
+      "documentation": "https://djehuty.4tu.nl/"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "4TU.ResearchData OAI-PMH",
+      "url": "https://djehuty.4tu.nl/",
+      "description": "OAI-PMH metadata harvesting interface for the 4TU.ResearchData repository."
+    },
+    {
+      "@type": "WebAPI",
+      "name": "TU Delft Repository (OAI-PMH)",
+      "url": "https://repository.tudelft.nl/",
+      "description": "OAI-PMH harvesting interface for publicly available TU Delft research output and theses; metadata licensed CC0."
+    }
+  ]
+}
