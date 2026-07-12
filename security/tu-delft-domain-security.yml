@@ -1,0 +1,40 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.tudelft.nl
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 11 23:59:59 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: djehuty.4tu.nl
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 12 22:09:22 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: data.4tu.nl
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  6 08:20:16 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+domains:
+- domain: tudelft.nl
+  dnssec: true
+  caa:
+  - 0 issue "letsencrypt.org"
+  - 0 issue "sectigo.com"
+  - 0 iodef "mailto:abuse@tudelft.nl"
+  - 0 issuewild "harica.gr"
+  - 0 issuemail "harica.gr"
+  - 0 issue "harica.gr"
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: 4tu.nl
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: false

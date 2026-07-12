@@ -105,6 +105,10 @@ apis:
       - type: Authentication
         url: https://api.tudelft.nl/cms/developers-guide/oauth2/
 common:
+  - type: VulnerabilityDisclosure
+    url: security/tu-delft-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/tu-delft-domain-security.yml
   - type: Website
     url: https://www.tudelft.nl/
   - type: GitHub
