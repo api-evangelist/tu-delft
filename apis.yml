@@ -1,138 +1,272 @@
 ---
 aid: tu-delft
 name: Delft University of Technology
+x-type: university
+x-category: Technical University
 description: >-
-  Delft University of Technology (TU Delft) is the largest and oldest public
-  technical university in the Netherlands, ranked #51 in the QS World University
-  Rankings 2025. Its public developer footprint centers on research and library
-  data infrastructure rather than a unified developer portal: the 4TU.ResearchData
-  repository (data.4tu.nl), which TU Delft co-founded and leads, exposes a public
-  REST API (v2/v3, the open-source "djehuty" platform) plus OAI-PMH metadata
-  harvesting; the TU Delft Repository (repository.tudelft.nl) publishes open-access
-  theses and research output with OAI-PMH metadata; and TU Delft operates a
-  NetID/OAuth2 single sign-on identity service. TU Delft historically ran a
-  general institutional API platform at api.tudelft.nl (campus, buildings,
-  courses, education and organisation data) secured with OAuth2, but that
-  platform has been publicly announced as being suspended with no new client
-  registrations accepted, so it is documented here as gated/legacy.
+  Delft University of Technology (TU Delft) is the oldest and largest public technical
+  university in the Netherlands and a member of the 4TU.Federation. Its programmable footprint
+  is narrow, and this profile states that plainly rather than padding it. TU Delft operates
+  exactly one public, unauthenticated API: the 4TU.ResearchData repository at data.4tu.nl,
+  which runs on djehuty, open-source repository software written by 4TU.ResearchData and
+  Nikhef. The /v2 surface is deliberately shape-compatible with the Figshare v2 API because
+  that was a requirement of the 2023 migration OFF Figshare — the contract is not Figshare's,
+  and the service runs inside TU Delft's own RIPE netblock (DUNET, 131.180.0.0/16). The other
+  genuinely institution-operated machine-readable surface is a SAML 2.0 identity provider at
+  login.tudelft.nl, published into the SURFconext national federation and onward to eduGAIN.
+  Beyond those two, the picture is retirement and tenancy. The general-purpose institutional
+  API platform at api.tudelft.nl — campus, buildings, courses, schedules, study results,
+  organisation — no longer answers on port 80 or 443, and its documentation host
+  apidoc.tudelft.nl has no DNS record at all. The research information portal at
+  pure.tudelft.nl / research.tudelft.nl is an Elsevier Pure tenancy whose own API
+  documentation canonicalises to api.elsevierpure.com: TU Delft's data, Elsevier's contract.
+  The library discovery layer is an OCLC WorldCat tenancy. No working OAI-PMH endpoint exists
+  on any TU Delft-operated host despite third-party registry entries claiming otherwise. TU
+  Delft publishes no OpenAPI, no llms.txt, no scope vocabulary and no API changelog.
 type: Index
 accessModel:
   pricing: free
   onboarding: unknown
   trial: false
-  try_now: false
-  public: false
+  try_now: true
+  public: true
   label: Free
-  confidence: medium
+  confidence: high
   source:
-  - plans
-  generated: '2026-07-22'
-  method: derived
+  - probed
+  generated: '2026-08-19'
+  method: probed
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/tu-delft.png
 url: https://raw.githubusercontent.com/api-evangelist/tu-delft/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
+  - Higher Education
+  - Education
+  - Technical University
   - Research Data
   - Open Access
-  - Library
-  - Open Data
+  - Identity Federation
+  - Research Repository
+  - Research Computing
+  - 4TU.Federation
   - Netherlands
   - Europe
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-19'
 specificationVersion: '0.23'
+x-coverage:
+  state: covered
+  reason: single_institutional_api_plus_federation_identity
+  detail: >-
+    The institution's programmable surface was probed directly rather than inferred. One public
+    institutional API was found and verified live (4TU.ResearchData, twelve endpoints answering
+    HTTP 200/403/405 without credentials), and one machine-readable identity artifact was found
+    and retrieved (SAML 2.0 IdP metadata, cross-confirmed in the live SURFconext aggregate).
+    Three previously catalogued surfaces did not survive probing: the api.tudelft.nl platform
+    is unreachable on both ports with its documentation host removed from DNS, and neither
+    claimed OAI-PMH interface exists — data.4tu.nl returns a JSON 404 on every OAI path, and
+    repository.tudelft.nl returns its soft-404 chrome on every OAI path over http and https,
+    while the base URL OpenAIRE advertises for it belongs to TNO's repository. One genuine
+    tenant relationship the June 2026 profile missed entirely was found and recorded rather
+    than deleted: the Elsevier Pure instance at pure.tudelft.nl. The profile is thin because
+    TU Delft's public programmable footprint is thin, not because the hunt was short.
+  evidence:
+    - { url: 'https://data.4tu.nl/v2/articles?limit=1', status: 200 }
+    - { url: 'https://data.4tu.nl/v3/datasets?limit=1', status: 200 }
+    - { url: 'https://data.4tu.nl/v3/groups', status: 200 }
+    - { url: 'https://data.4tu.nl/v2/licenses', status: 200 }
+    - { url: 'https://data.4tu.nl/v2/categories', status: 200 }
+    - { url: 'https://data.4tu.nl/v2/account/articles', status: 403 }
+    - { url: 'https://data.4tu.nl/v2/articles/search', status: 405 }
+    - { url: 'https://login.tudelft.nl/sso/saml2/idp/metadata.php', status: 200 }
+    - { url: 'https://metadata.surfconext.nl/idps-metadata.xml', status: 200 }
+    - { url: 'https://www.tudelft.nl/.well-known/security.txt', status: 200 }
+    - { url: 'https://pure.tudelft.nl/ws/oai?verb=Identify', status: 401 }
+    - { url: 'https://api.tudelft.nl/', status: 0, note: 'TCP timeout on 443 and 80; DNS resolves to 131.180.187.26 (DUNET)' }
+    - { url: 'https://apidoc.tudelft.nl/', status: 0, note: 'no DNS record' }
+    - { url: 'https://oauth.tudelft.nl/', status: 0, note: 'TCP timeout on 443' }
+    - { url: 'https://data.4tu.nl/oai?verb=Identify', status: 404 }
+    - { url: 'https://repository.tudelft.nl/oai?verb=Identify', status: 404 }
+    - { url: 'https://oai-pmh.tno.nl/OaiPmh?verb=Identify', status: 200, note: 'identifies as "TNO repository", noSetHierarchy — not TU Delft' }
+    - { url: 'https://www.tudelft.nl/llms.txt', status: 404 }
+    - { url: 'https://data.4tu.nl/.well-known/openid-configuration', status: 404 }
+    - { url: 'https://opendap.4tu.nl/thredds/catalog/catalog.xml', status: 0, note: 'documented by the operator, times out from the public internet' }
 apis:
-  - aid: tu-delft:researchdata
+  - aid: tu-delft:4tu-researchdata
     name: 4TU.ResearchData API
+    x-operator: institution
+    x-operator-evidence: >-
+      data.4tu.nl resolves to 131.180.169.22, inside the RIPE inetnum 131.180.0.0/16, netname
+      DUNET, org-name "Technische Universiteit Delft". re3data record r3d100010216 names TU
+      Delft Library as a hosting institution for the repository, alongside the 4TU.Federation
+      and the three partner universities. The software is 4TU's own open-source djehuty, not a
+      vendor platform; GET /v3/groups returns the four consortium partners as depositing groups.
     description: >-
-      Public REST API for the 4TU.ResearchData repository (data.4tu.nl), which
-      TU Delft co-founded and leads. Provides versioned endpoints (v2/v3) for
-      published articles (datasets), collections, categories, licenses, author
-      records and Git-backed dataset repositories. Built on the open-source
-      "djehuty" platform developed by 4TU.ResearchData and Nikhef.
-    humanURL: https://djehuty.4tu.nl/
-    baseURL: https://data.4tu.nl/v2
-    tags: [ Research Data, Open Data, Repository, REST, FAIR ]
+      Public REST API for the 4TU.ResearchData repository, the science/engineering/design
+      research data repository of the 4TU.Federation, hosted and operated by TU Delft Library.
+      Twelve endpoints verified live and unauthenticated on 2026-08-19: dataset listing, search,
+      retrieval, files and versions on /v2; datasets and depositing groups on /v3; plus the
+      license and category vocabularies. Depositor endpoints under /v2/account/ take an opaque
+      personal bearer token. The /v2 surface is backward compatible with the Figshare v2 API
+      shape as a migration requirement — uuid supersedes the numeric id and usage errors return
+      precise HTTP codes rather than a blanket 400. Datasets carry versioned DataCite DOIs
+      under the 10.4121 prefix and expose ORCID iDs on author records.
+    humanURL: https://data.4tu.nl/
+    baseURL: https://data.4tu.nl
+    tags: [ Research Data, Open Data, Repository, REST, FAIR, DataCite, ORCID ]
     properties:
+      - type: OpenAPI
+        url: openapi/tu-delft-4tu-researchdata-openapi.yml
+      - type: JSONSchema
+        url: json-schema/tu-delft-4tu-dataset.json
+      - type: Examples
+        url: examples/tu-delft-4tu-researchdata-examples.json
+      - type: Rules
+        url: rules/tu-delft-4tu-rules.yml
+      - type: Errors
+        url: errors/tu-delft-4tu-errors.yml
+      - type: Authentication
+        url: authentication/tu-delft-authentication.yml
+      - type: Scopes
+        url: scopes/tu-delft-scopes.yml
+      - type: Conformance
+        url: conformance/tu-delft-conformance.yml
+      - type: Lifecycle
+        url: lifecycle/tu-delft-lifecycle.yml
+      - type: Vocabulary
+        url: vocabulary/tu-delft-vocabulary.yml
       - type: Documentation
         url: https://djehuty.4tu.nl/
-      - type: GitHub
+      - type: SourceCode
         url: https://github.com/4TUResearchData/djehuty
-  - aid: tu-delft:researchdata-oaipmh
-    name: 4TU.ResearchData OAI-PMH
+      - type: TermsOfService
+        url: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+      - type: Support
+        url: https://data.4tu.nl/info/about-4turesearchdata/contact
+  - aid: tu-delft:identity-federation
+    name: TU Delft SAML 2.0 Identity Provider (NetID)
+    x-operator: institution
+    x-operator-evidence: >-
+      The entityID is https://login.tudelft.nl/sso/saml2/idp/metadata.php, on the institution's
+      own registrable domain, and the metadata document is served from that host directly with
+      content-type application/samlmetadata+xml. The same entity appears in SURF's live
+      SURFconext IdP aggregate under the display names "Technische Universiteit Delft" and
+      "Delft University of Technology".
     description: >-
-      OAI-PMH metadata harvesting interface for the 4TU.ResearchData repository,
-      enabling programmatic harvesting of dataset and software metadata
-      (findable via DataCite, Google Dataset Search and aggregators).
-    humanURL: https://djehuty.4tu.nl/
-    tags: [ OAI-PMH, Metadata, Harvesting, Research Data ]
-    properties:
-      - type: Documentation
-        url: https://djehuty.4tu.nl/
-  - aid: tu-delft:repository-oaipmh
-    name: TU Delft Repository (OAI-PMH)
-    description: >-
-      Institutional repository for publicly available TU Delft research output,
-      peer-reviewed articles, technical reports and 46,000+ bachelor/master
-      theses. Metadata is licensed CC0 and exposed for programmatic harvesting
-      via OAI-PMH; the repository is also indexed by OpenAIRE and OpenDOAR.
-    humanURL: https://repository.tudelft.nl/
-    tags: [ OAI-PMH, Repository, Open Access, Theses, Metadata ]
-    properties:
-      - type: Documentation
-        url: https://www.tudelft.nl/en/library/collections/resources-and-collections/access-academic-work-from-the-tu-delft-repository
-  - aid: tu-delft:identity
-    name: TU Delft NetID / OAuth2 SSO
-    description: >-
-      TU Delft single sign-on and identity service (NetID) used for
-      authentication across TU Delft web services and as the OAuth2
-      authorization service (oauth.tudelft.nl) for institutional API access,
-      supporting client-credentials and NetID-based authorization grants.
+      TU Delft's SimpleSAMLphp identity provider — the machine-readable half of NetID. It
+      publishes a signed SAML 2.0 EntityDescriptor with an IDPSSODescriptor and is registered
+      in SURFconext, the Dutch national research and education identity federation operated by
+      SURF, which in turn publishes into eduGAIN. This is the surface class universities
+      operate by definition and almost never get catalogued for: it is institution-run,
+      machine-readable, and it is what actually lets a researcher at another institution
+      authenticate against a TU Delft service. Note what it is NOT — there is no OpenID Connect
+      discovery document (login.tudelft.nl/.well-known/openid-configuration returns 403) and no
+      OAuth 2.0 authorization server.
     humanURL: https://www.tudelft.nl/en/it-manuals/netid
-    tags: [ Identity, Authentication, OAuth2, SSO, NetID ]
+    baseURL: https://login.tudelft.nl/sso/saml2/idp/metadata.php
+    tags: [ Identity Federation, SAML, SSO, eduGAIN, SURFconext, NetID ]
     properties:
+      - type: IdentityFederation
+        url: authentication/tu-delft-saml-idp-metadata.xml
+      - type: Metadata
+        url: https://login.tudelft.nl/sso/saml2/idp/metadata.php
+      - type: Authentication
+        url: authentication/tu-delft-authentication.yml
       - type: Documentation
         url: https://www.tudelft.nl/en/it-manuals/netid
-      - type: Authentication
-        url: https://login.tudelft.nl/
-  - aid: tu-delft:institutional-api
-    name: TU Delft API Platform (legacy / suspended)
+      - type: Federation
+        url: https://metadata.surfconext.nl/idps-metadata.xml
+  - aid: tu-delft:pure
+    name: Elsevier Pure research portal (TU Delft tenancy)
+    x-operator: tenant
+    x-operator-evidence: >-
+      The API documentation served at https://pure.tudelft.nl/ws/api/ carries
+      rel=canonical to https://api.elsevierpure.com/ws/api/index.html — the contract is
+      Elsevier's product documentation running under a TU Delft hostname. The institution-specific
+      subdomain makes this a tenancy, not an institutional API.
     description: >-
-      Legacy general-purpose TU Delft API platform (api.tudelft.nl) exposing
-      campus, buildings, computer workspaces, educations, study-years, courses,
-      course schedules, study results/progress and TU Delft organisation
-      (faculties) data, secured with OAuth2 via oauth.tudelft.nl. TU Delft has
-      publicly announced this API is being suspended with no new client
-      registrations accepted and no near-term replacement; documented here for
-      completeness as a gated/legacy interface.
-    humanURL: https://api.tudelft.nl/cms/developers-guide/oauth2/
-    tags: [ Campus, Education, Courses, OAuth2, Legacy, Gated ]
+      TU Delft runs an Elsevier Pure current research information system, exposed to the public
+      as the research portal at research.tudelft.nl / pure.tudelft.nl and to integrators as the
+      Pure Web Service under /ws/api/ with a credential-gated OAI-PMH interface at /ws/oai
+      (HTTP 401 — the interface exists and is gated, not absent). RECORDED AS A RELATIONSHIP,
+      NOT A CONTRACT. The publications, people and project data are TU Delft's; the API surface
+      that carries them is Elsevier's product and belongs on Elsevier's own scorecard. No Pure
+      specification is saved into this repository, and nothing is derived from one. This entry
+      exists so that a real institutional fact — TU Delft is a Pure customer — is on the record
+      without a vendor's contract being credited to the university.
+    humanURL: https://research.tudelft.nl/
+    baseURL: https://pure.tudelft.nl/ws
+    tags: [ Research Information, CRIS, Tenant, Elsevier Pure, Gated ]
     properties:
+      - type: Website
+        url: https://research.tudelft.nl/
       - type: Documentation
-        url: https://apidoc.tudelft.nl/
+        url: https://pure.tudelft.nl/ws/api/
       - type: Authentication
-        url: https://api.tudelft.nl/cms/developers-guide/oauth2/
+        url: authentication/tu-delft-authentication.yml
 common:
+  - type: Website
+    url: https://www.tudelft.nl/
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/tu-delft/
+  - type: GitHubOrganization
+    url: https://github.com/4TUResearchData
+  - type: SourceCode
+    url: https://github.com/4TUResearchData/djehuty
+  - type: Documentation
+    url: https://djehuty.4tu.nl/
+  - type: APIReference
+    url: https://djehuty.4tu.nl/
+  - type: OpenData
+    url: https://data.4tu.nl/
+  - type: ResearchRepository
+    url: https://repository.tudelft.nl/
+  - type: ResearchRepository
+    url: https://research.tudelft.nl/
+  - type: LibraryCatalog
+    url: https://tudelft.on.worldcat.org/discovery
+  - type: CourseCatalog
+    url: https://studiegids.tudelft.nl/
+  - type: IdentityFederation
+    url: https://login.tudelft.nl/sso/saml2/idp/metadata.php
+  - type: ResearchComputing
+    url: https://doc.dhpc.tudelft.nl/delftblue/
+  - type: AIPolicy
+    url: https://www.tudelft.nl/en/teaching-support/educational-advice/assess/guidelines/ai-chatbots-in-unsupervised-assessment
+  - type: AITooling
+    url: https://www.tudelft.nl/en/ai
+  - type: OpenCourseWare
+    url: https://ocw.tudelft.nl/
+  - type: Library
+    url: https://www.tudelft.nl/en/library/
+  - type: Blog
+    url: https://community.data.4tu.nl/
+  - type: Support
+    url: https://www.tudelft.nl/en/contact
+  - type: PrivacyPolicy
+    url: https://www.tudelft.nl/en/privacy-statement
+  - type: TermsOfService
+    url: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+  - type: SecurityTxt
+    url: https://www.tudelft.nl/.well-known/security.txt
   - type: VulnerabilityDisclosure
     url: security/tu-delft-vulnerability-disclosure.yml
   - type: DomainSecurity
     url: security/tu-delft-domain-security.yml
-  - type: Website
-    url: https://www.tudelft.nl/
-  - type: GitHub
-    url: https://github.com/4TUResearchData
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/tu-delft/
-  - type: DeveloperPortal
-    url: https://djehuty.4tu.nl/
   - type: Authentication
-    url: https://login.tudelft.nl/
-  - type: SourceCode
-    url: https://github.com/4TUResearchData/djehuty
+    url: authentication/tu-delft-authentication.yml
+  - type: Scopes
+    url: scopes/tu-delft-scopes.yml
+  - type: Conformance
+    url: conformance/tu-delft-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/tu-delft-lifecycle.yml
+  - type: Vocabulary
+    url: vocabulary/tu-delft-vocabulary.yml
+  - type: JSONLD
+    url: json-ld/tu-delft-context.jsonld
   - type: Plans
     url: plans/tu-delft-plans-pricing.yml
   - type: RateLimits
