@@ -2,13 +2,20 @@
   "repo": "tu-delft",
   "feeds": [
     {
-      "source": "https://community.data.4tu.nl",
+      "source": "https://community.data.4tu.nl/feed/",
       "feed_url": "https://community.data.4tu.nl/feed/",
-      "title": "4TU.ResearchData",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.tudelft.nl/en/library/",
+      "feed_url": "https://www.tudelft.nl/en/library/",
+      "title": "",
       "saved": 0,
       "method": "none"
     }
   ],
   "post_count": 12,
-  "fetched": "2026-08-15T12:11:08Z"
+  "fetched": "2026-08-22T20:20:02Z"
 }
