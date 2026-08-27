@@ -94,118 +94,218 @@ x-coverage:
     - { url: 'https://data.4tu.nl/.well-known/openid-configuration', status: 404 }
     - { url: 'https://opendap.4tu.nl/thredds/catalog/catalog.xml', status: 0, note: 'documented by the operator, times out from the public internet' }
 apis:
-  - aid: tu-delft:4tu-researchdata
-    name: 4TU.ResearchData API
-    x-operator: institution
-    x-operator-evidence: >-
-      data.4tu.nl resolves to 131.180.169.22, inside the RIPE inetnum 131.180.0.0/16, netname
-      DUNET, org-name "Technische Universiteit Delft". re3data record r3d100010216 names TU
-      Delft Library as a hosting institution for the repository, alongside the 4TU.Federation
-      and the three partner universities. The software is 4TU's own open-source djehuty, not a
-      vendor platform; GET /v3/groups returns the four consortium partners as depositing groups.
-    description: >-
-      Public REST API for the 4TU.ResearchData repository, the science/engineering/design
-      research data repository of the 4TU.Federation, hosted and operated by TU Delft Library.
-      Twelve endpoints verified live and unauthenticated on 2026-08-19: dataset listing, search,
-      retrieval, files and versions on /v2; datasets and depositing groups on /v3; plus the
-      license and category vocabularies. Depositor endpoints under /v2/account/ take an opaque
-      personal bearer token. The /v2 surface is backward compatible with the Figshare v2 API
-      shape as a migration requirement — uuid supersedes the numeric id and usage errors return
-      precise HTTP codes rather than a blanket 400. Datasets carry versioned DataCite DOIs
-      under the 10.4121 prefix and expose ORCID iDs on author records.
-    humanURL: https://data.4tu.nl/
-    baseURL: https://data.4tu.nl
-    tags: [ Research Data, Open Data, Repository, REST, FAIR, DataCite, ORCID ]
-    properties:
-      - type: OpenAPI
-        url: openapi/tu-delft-4tu-researchdata-openapi.yml
-      - type: JSONSchema
-        url: json-schema/tu-delft-4tu-dataset.json
-      - type: Examples
-        url: examples/tu-delft-4tu-researchdata-examples.json
-      - type: Rules
-        url: rules/tu-delft-4tu-rules.yml
-      - type: Errors
-        url: errors/tu-delft-4tu-errors.yml
-      - type: Authentication
-        url: authentication/tu-delft-authentication.yml
-      - type: Scopes
-        url: scopes/tu-delft-scopes.yml
-      - type: Conformance
-        url: conformance/tu-delft-conformance.yml
-      - type: Lifecycle
-        url: lifecycle/tu-delft-lifecycle.yml
-      - type: Vocabulary
-        url: vocabulary/tu-delft-vocabulary.yml
-      - type: Documentation
-        url: https://djehuty.4tu.nl/
-      - type: SourceCode
-        url: https://github.com/4TUResearchData/djehuty
-      - type: TermsOfService
-        url: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
-      - type: Support
-        url: https://data.4tu.nl/info/about-4turesearchdata/contact
-  - aid: tu-delft:identity-federation
-    name: TU Delft SAML 2.0 Identity Provider (NetID)
-    x-operator: institution
-    x-operator-evidence: >-
-      The entityID is https://login.tudelft.nl/sso/saml2/idp/metadata.php, on the institution's
-      own registrable domain, and the metadata document is served from that host directly with
-      content-type application/samlmetadata+xml. The same entity appears in SURF's live
-      SURFconext IdP aggregate under the display names "Technische Universiteit Delft" and
-      "Delft University of Technology".
-    description: >-
-      TU Delft's SimpleSAMLphp identity provider — the machine-readable half of NetID. It
-      publishes a signed SAML 2.0 EntityDescriptor with an IDPSSODescriptor and is registered
-      in SURFconext, the Dutch national research and education identity federation operated by
-      SURF, which in turn publishes into eduGAIN. This is the surface class universities
-      operate by definition and almost never get catalogued for: it is institution-run,
-      machine-readable, and it is what actually lets a researcher at another institution
-      authenticate against a TU Delft service. Note what it is NOT — there is no OpenID Connect
-      discovery document (login.tudelft.nl/.well-known/openid-configuration returns 403) and no
-      OAuth 2.0 authorization server.
-    humanURL: https://www.tudelft.nl/en/it-manuals/netid
-    baseURL: https://login.tudelft.nl/sso/saml2/idp/metadata.php
-    tags: [ Identity Federation, SAML, SSO, eduGAIN, SURFconext, NetID ]
-    properties:
-      - type: IdentityFederation
-        url: authentication/tu-delft-saml-idp-metadata.xml
-      - type: Metadata
-        url: https://login.tudelft.nl/sso/saml2/idp/metadata.php
-      - type: Authentication
-        url: authentication/tu-delft-authentication.yml
-      - type: Documentation
-        url: https://www.tudelft.nl/en/it-manuals/netid
-      - type: Federation
-        url: https://metadata.surfconext.nl/idps-metadata.xml
-  - aid: tu-delft:pure
-    name: Elsevier Pure research portal (TU Delft tenancy)
-    x-operator: tenant
-    x-operator-evidence: >-
-      The API documentation served at https://pure.tudelft.nl/ws/api/ carries
-      rel=canonical to https://api.elsevierpure.com/ws/api/index.html — the contract is
-      Elsevier's product documentation running under a TU Delft hostname. The institution-specific
-      subdomain makes this a tenancy, not an institutional API.
-    description: >-
-      TU Delft runs an Elsevier Pure current research information system, exposed to the public
-      as the research portal at research.tudelft.nl / pure.tudelft.nl and to integrators as the
-      Pure Web Service under /ws/api/ with a credential-gated OAI-PMH interface at /ws/oai
-      (HTTP 401 — the interface exists and is gated, not absent). RECORDED AS A RELATIONSHIP,
-      NOT A CONTRACT. The publications, people and project data are TU Delft's; the API surface
-      that carries them is Elsevier's product and belongs on Elsevier's own scorecard. No Pure
-      specification is saved into this repository, and nothing is derived from one. This entry
-      exists so that a real institutional fact — TU Delft is a Pure customer — is on the record
-      without a vendor's contract being credited to the university.
-    humanURL: https://research.tudelft.nl/
-    baseURL: https://pure.tudelft.nl/ws
-    tags: [ Research Information, CRIS, Tenant, Elsevier Pure, Gated ]
-    properties:
-      - type: Website
-        url: https://research.tudelft.nl/
-      - type: Documentation
-        url: https://pure.tudelft.nl/ws/api/
-      - type: Authentication
-        url: authentication/tu-delft-authentication.yml
+- aid: tu-delft:identity-federation
+  name: TU Delft SAML 2.0 Identity Provider (NetID)
+  x-operator: institution
+  x-operator-evidence: >-
+    The entityID is https://login.tudelft.nl/sso/saml2/idp/metadata.php, on the institution's own registrable
+    domain, and the metadata document is served from that host directly with content-type application/samlmetadata+xml.
+    The same entity appears in SURF's live SURFconext IdP aggregate under the display names "Technische
+    Universiteit Delft" and "Delft University of Technology".
+  description: >-
+    TU Delft's SimpleSAMLphp identity provider — the machine-readable half of NetID. It publishes a signed
+    SAML 2.0 EntityDescriptor with an IDPSSODescriptor and is registered in SURFconext, the Dutch national
+    research and education identity federation operated by SURF, which in turn publishes into eduGAIN.
+    This is the surface class universities operate by definition and almost never get catalogued for:
+    it is institution-run, machine-readable, and it is what actually lets a researcher at another institution
+    authenticate against a TU Delft service. Note what it is NOT — there is no OpenID Connect discovery
+    document (login.tudelft.nl/.well-known/openid-configuration returns 403) and no OAuth 2.0 authorization
+    server.
+  humanURL: https://www.tudelft.nl/en/it-manuals/netid
+  baseURL: https://login.tudelft.nl/sso/saml2/idp/metadata.php
+  tags:
+  - Identity Federation
+  - SAML
+  - SSO
+  - eduGAIN
+  - SURFconext
+  - NetID
+  properties:
+  - type: IdentityFederation
+    url: authentication/tu-delft-saml-idp-metadata.xml
+  - type: Metadata
+    url: https://login.tudelft.nl/sso/saml2/idp/metadata.php
+  - type: Authentication
+    url: authentication/tu-delft-authentication.yml
+  - type: Documentation
+    url: https://www.tudelft.nl/en/it-manuals/netid
+  - type: Federation
+    url: https://metadata.surfconext.nl/idps-metadata.xml
+- aid: tu-delft:pure
+  name: Elsevier Pure research portal (TU Delft tenancy)
+  x-operator: tenant
+  x-operator-evidence: >-
+    The API documentation served at https://pure.tudelft.nl/ws/api/ carries rel=canonical to https://api.elsevierpure.com/ws/api/index.html
+    — the contract is Elsevier's product documentation running under a TU Delft hostname. The institution-specific
+    subdomain makes this a tenancy, not an institutional API.
+  description: >-
+    TU Delft runs an Elsevier Pure current research information system, exposed to the public as the research
+    portal at research.tudelft.nl / pure.tudelft.nl and to integrators as the Pure Web Service under /ws/api/
+    with a credential-gated OAI-PMH interface at /ws/oai (HTTP 401 — the interface exists and is gated,
+    not absent). RECORDED AS A RELATIONSHIP, NOT A CONTRACT. The publications, people and project data
+    are TU Delft's; the API surface that carries them is Elsevier's product and belongs on Elsevier's
+    own scorecard. No Pure specification is saved into this repository, and nothing is derived from one.
+    This entry exists so that a real institutional fact — TU Delft is a Pure customer — is on the record
+    without a vendor's contract being credited to the university.
+  humanURL: https://research.tudelft.nl/
+  baseURL: https://pure.tudelft.nl/ws
+  tags:
+  - Research Information
+  - CRIS
+  - Tenant
+  - Elsevier Pure
+  - Gated
+  properties:
+  - type: Website
+    url: https://research.tudelft.nl/
+  - type: Documentation
+    url: https://pure.tudelft.nl/ws/api/
+  - type: Authentication
+    url: authentication/tu-delft-authentication.yml
+- aid: tu-delft:tu-delft-account-api
+  name: Delft University of Technology Account API
+  description: Token-authenticated endpoints scoped to a depositor account.
+  humanURL: https://data.4tu.nl/
+  baseURL: https://data.4tu.nl
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/tu-delft-account-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/tu-delft-4tu-dataset.json
+  - type: Examples
+    url: examples/tu-delft-4tu-researchdata-examples.json
+  - type: Rules
+    url: rules/tu-delft-4tu-rules.yml
+  - type: Errors
+    url: errors/tu-delft-4tu-errors.yml
+  - type: Authentication
+    url: authentication/tu-delft-authentication.yml
+  - type: Scopes
+    url: scopes/tu-delft-scopes.yml
+  - type: Conformance
+    url: conformance/tu-delft-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/tu-delft-lifecycle.yml
+  - type: Vocabulary
+    url: vocabulary/tu-delft-vocabulary.yml
+  - type: Documentation
+    url: https://djehuty.4tu.nl/
+  - type: SourceCode
+    url: https://github.com/4TUResearchData/djehuty
+  - type: TermsOfService
+    url: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+  - type: Support
+    url: https://data.4tu.nl/info/about-4turesearchdata/contact
+- aid: tu-delft:tu-delft-collections-api
+  name: Delft University of Technology Collections API
+  description: Curated groupings of published datasets.
+  humanURL: https://data.4tu.nl/
+  baseURL: https://data.4tu.nl
+  tags:
+  - Collections
+  properties:
+  - type: OpenAPI
+    url: openapi/tu-delft-collections-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/tu-delft-4tu-dataset.json
+  - type: Examples
+    url: examples/tu-delft-4tu-researchdata-examples.json
+  - type: Rules
+    url: rules/tu-delft-4tu-rules.yml
+  - type: Errors
+    url: errors/tu-delft-4tu-errors.yml
+  - type: Authentication
+    url: authentication/tu-delft-authentication.yml
+  - type: Scopes
+    url: scopes/tu-delft-scopes.yml
+  - type: Conformance
+    url: conformance/tu-delft-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/tu-delft-lifecycle.yml
+  - type: Vocabulary
+    url: vocabulary/tu-delft-vocabulary.yml
+  - type: Documentation
+    url: https://djehuty.4tu.nl/
+  - type: SourceCode
+    url: https://github.com/4TUResearchData/djehuty
+  - type: TermsOfService
+    url: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+  - type: Support
+    url: https://data.4tu.nl/info/about-4turesearchdata/contact
+- aid: tu-delft:tu-delft-datasets-api
+  name: Delft University of Technology Datasets API
+  description: Published datasets (called "articles" on the Figshare-compatible v2 surface).
+  humanURL: https://data.4tu.nl/
+  baseURL: https://data.4tu.nl
+  tags:
+  - Datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/tu-delft-datasets-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/tu-delft-4tu-dataset.json
+  - type: Examples
+    url: examples/tu-delft-4tu-researchdata-examples.json
+  - type: Rules
+    url: rules/tu-delft-4tu-rules.yml
+  - type: Errors
+    url: errors/tu-delft-4tu-errors.yml
+  - type: Authentication
+    url: authentication/tu-delft-authentication.yml
+  - type: Scopes
+    url: scopes/tu-delft-scopes.yml
+  - type: Conformance
+    url: conformance/tu-delft-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/tu-delft-lifecycle.yml
+  - type: Vocabulary
+    url: vocabulary/tu-delft-vocabulary.yml
+  - type: Documentation
+    url: https://djehuty.4tu.nl/
+  - type: SourceCode
+    url: https://github.com/4TUResearchData/djehuty
+  - type: TermsOfService
+    url: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+  - type: Support
+    url: https://data.4tu.nl/info/about-4turesearchdata/contact
+- aid: tu-delft:tu-delft-reference-api
+  name: Delft University of Technology Reference API
+  description: Controlled vocabularies — licenses, categories and depositing groups.
+  humanURL: https://data.4tu.nl/
+  baseURL: https://data.4tu.nl
+  tags:
+  - Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/tu-delft-reference-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/tu-delft-4tu-dataset.json
+  - type: Examples
+    url: examples/tu-delft-4tu-researchdata-examples.json
+  - type: Rules
+    url: rules/tu-delft-4tu-rules.yml
+  - type: Errors
+    url: errors/tu-delft-4tu-errors.yml
+  - type: Authentication
+    url: authentication/tu-delft-authentication.yml
+  - type: Scopes
+    url: scopes/tu-delft-scopes.yml
+  - type: Conformance
+    url: conformance/tu-delft-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/tu-delft-lifecycle.yml
+  - type: Vocabulary
+    url: vocabulary/tu-delft-vocabulary.yml
+  - type: Documentation
+    url: https://djehuty.4tu.nl/
+  - type: SourceCode
+    url: https://github.com/4TUResearchData/djehuty
+  - type: TermsOfService
+    url: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+  - type: Support
+    url: https://data.4tu.nl/info/about-4turesearchdata/contact
 common:
   - type: Website
     url: https://www.tudelft.nl/
