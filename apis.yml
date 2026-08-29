@@ -24,6 +24,19 @@ description: >-
   on any TU Delft-operated host despite third-party registry entries claiming otherwise. TU
   Delft publishes no OpenAPI, no llms.txt, no scope vocabulary and no API changelog.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: unknown
@@ -307,6 +320,16 @@ apis:
   - type: Support
     url: https://data.4tu.nl/info/about-4turesearchdata/contact
 common:
+  - type: IssueTracker
+    url: https://github.com/4TUResearchData/djehuty/issues
+  - type: Releases
+    url: https://github.com/4TUResearchData/djehuty/releases
+  - type: SecurityPolicy
+    url: https://github.com/4TUResearchData/djehuty/blob/main/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/4TUResearchData/djehuty/blob/main/CODE_OF_CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/4TUResearchData/djehuty/blob/main/CONTRIBUTING.md
   - type: Website
     url: https://www.tudelft.nl/
   - type: LinkedIn
