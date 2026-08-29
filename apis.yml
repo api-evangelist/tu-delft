@@ -320,6 +320,9 @@ apis:
   - type: Support
     url: https://data.4tu.nl/info/about-4turesearchdata/contact
 common:
+  - type: CapabilityMap
+    url: capabilities/tu-delft-capability-edges.yml
+    name: Delft University of Technology Business Capability Map
   - type: IssueTracker
     url: https://github.com/4TUResearchData/djehuty/issues
   - type: Releases
