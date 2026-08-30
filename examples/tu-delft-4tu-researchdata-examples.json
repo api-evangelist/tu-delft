@@ -1,0 +1,658 @@
+{
+  "generated": "2026-08-19",
+  "method": "probed",
+  "source": "Live unauthenticated GET/POST against https://data.4tu.nl on 2026-08-19. Every payload below is a real, unedited response body (truncated to one item where the endpoint returns a list).",
+  "x-operator": "institution",
+  "examples": [
+    {
+      "operationId": "listArticles",
+      "request": "GET https://data.4tu.nl/v2/articles?limit=1",
+      "status": 200,
+      "content_type": "application/json",
+      "response": [
+        {
+          "id": null,
+          "uuid": "fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "title": "Data associated with the article \"A spatiotemporal framework to assess the bio-geomorphic interplay of saltmarsh vegetation and tidal emergence (Western Scheldt estuary)\"",
+          "doi": "10.4121/fe23a0c6-b13a-49c5-accf-a09dc211983d.v1",
+          "handle": null,
+          "url": "https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "published_date": "2024-12-23T08:51:06",
+          "thumb": null,
+          "defined_type": 3,
+          "defined_type_name": "dataset",
+          "group_id": 34892,
+          "url_private_api": "https://data.4tu.nl/v2/account/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "url_public_api": "https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "url_private_html": "https://data.4tu.nl/my/datasets/fe23a0c6-b13a-49c5-accf-a09dc211983d/edit",
+          "url_public_html": "https://data.4tu.nl/datasets/fe23a0c6-b13a-49c5-accf-a09dc211983d/1",
+          "timeline": {
+            "posted": "2024-12-23T08:51:06",
+            "firstOnline": "2024-12-23T08:51:05",
+            "revision": null
+          },
+          "resource_title": "A spatiotemporal framework to assess the bio-geomorphic interplay of saltmarsh vegetation and tidal emergence (Western Scheldt estuary)",
+          "resource_doi": "10.1016/j.jag.2024.104337"
+        }
+      ]
+    },
+    {
+      "operationId": "getArticle",
+      "request": "GET https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+      "status": 200,
+      "content_type": "application/json",
+      "response": {
+        "files": [
+          {
+            "id": null,
+            "uuid": "a57f7093-8bd6-4012-9ae1-6459b5d1dae8",
+            "name": "Data_Repository.zip",
+            "size": 23968947,
+            "is_link_only": false,
+            "is_incomplete": false,
+            "download_url": "https://data.4tu.nl/file/fe23a0c6-b13a-49c5-accf-a09dc211983d/a57f7093-8bd6-4012-9ae1-6459b5d1dae8",
+            "supplied_md5": null,
+            "computed_md5": "d25cb8f6372b5cd71ee6298f5f369ca4"
+          }
+        ],
+        "custom_fields": [
+          {
+            "name": "Time coverage",
+            "value": "1993-2016"
+          },
+          {
+            "name": "Publisher",
+            "value": "4TU.ResearchData"
+          },
+          {
+            "name": "Organizations",
+            "value": "NIOZ Royal Netherlands Institute for Sea Research, Department of Estuarine and Delta Systems\nUniversity of Twente, Faculty of Geo-Information Science and Earth Observation (ITC)\nUniversity of Groningen, Groningen Institute for Evolutionary Life Sciences"
+          },
+          {
+            "name": "Language",
+            "value": "en"
+          },
+          {
+            "name": "Geolocation Longitude",
+            "value": "3.5 to 4.3"
+          },
+          {
+            "name": "Geolocation Latitude",
+            "value": "51.3 to 51.5"
+          },
+          {
+            "name": "Geolocation",
+            "value": "Western Scheldt, the Nethelands"
+          },
+          {
+            "name": "Format",
+            "value": "data tables/csv; R code/txt"
+          },
+          {
+            "name": "Derived From",
+            "value": [
+              "https://rijkswaterstaatdata.nl/"
+            ]
+          }
+        ],
+        "authors": [
+          {
+            "id": null,
+            "uuid": "3eabc277-c0b8-4809-b7a3-6600c286cb55",
+            "full_name": "Jing Feng",
+            "is_active": true,
+            "url_name": null,
+            "orcid_id": "0009-0005-1212-1509"
+          },
+          {
+            "id": null,
+            "uuid": "76d84b0b-a1e5-4f9e-bbb7-bafcfc238e71",
+            "full_name": "Tim Grandjean",
+            "is_active": false,
+            "url_name": null,
+            "orcid_id": "0000-0002-2729-3566"
+          },
+          {
+            "id": null,
+            "uuid": "ad730f95-918a-4baf-8603-5b238db6af36",
+            "full_name": "Johan van de Koppel",
+            "is_active": false,
+            "url_name": null,
+            "orcid_id": "0000-0002-0103-4275"
+          },
+          {
+            "id": null,
+            "uuid": "23532143-6a71-47c0-97f7-07657379e001",
+            "full_name": "Daphne van der Wal",
+            "is_active": false,
+            "url_name": null,
+            "orcid_id": "0000-0002-2319-056X"
+          }
+        ],
+        "figshare_url": null,
+        "description": "<p>In the publication associated with this dataset we study the links between changed emergence and plant diversity/cover by using emersion duration maps and vegetation maps of the Dutch Western Scheldt estuary over a period of decades (1993-2016). Using open-source maps of emersion duration, elevation, vegetation, and ecotopes from Rijkswaterstaat, we preprocessed the data in Google Earth Engine (GEE) and ArcGIS. The pixel-based or formatted data tables were then exported after integrating all data for further analysis and visualization in R. This dataset contains the processed data and R code used for generating all figures in the article. We also list original data sources in the descriptive files.</p>",
+        "funding": null,
+        "funding_list": [
+          {
+            "id": null,
+            "uuid": "e6d0f24b-df64-4891-a945-a87005ea051c",
+            "title": "China Scholarship Council (CSC)",
+            "grant_code": "",
+            "funder_name": "",
+            "is_user_defined": null,
+            "url": ""
+          }
+        ],
+        "version": 1,
+        "status": null,
+        "size": null,
+        "created_date": "2024-12-18T15:54:36",
+        "modified_date": "2024-12-23T08:51:05",
+        "is_public": true,
+        "is_confidential": false,
+        "is_metadata_record": false,
+        "confidential_reason": "",
+        "metadata_reason": "",
+        "license": {
+          "value": 1,
+          "name": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        "tags": [
+          "relative sea level change",
+          "morphodynamics",
+          "Western Scheldt estuary",
+          "saltmarsh vegetation",
+          "emersion duration",
+          "plant diversity"
+        ],
+        "categories": [
+          {
+            "id": 13394,
+            "uuid": "2f62b92d-22e8-4c7e-bc64-9d9d5cd4384d",
+            "title": "Land and Water Management",
+            "parent_id": 13385,
+            "parent_uuid": "e32043b4-8450-4660-9345-5ebd20436733",
+            "path": "",
+            "source_id": null,
+            "taxonomy_id": null
+          },
+          {
+            "id": 13580,
+            "uuid": "541bec48-b641-4d83-a53d-31a86a21c4ae",
+            "title": "Ecology",
+            "parent_id": 13578,
+            "parent_uuid": "c9376db2-dd6d-47f1-a329-d1691fc5b485",
+            "path": "",
+            "source_id": null,
+            "taxonomy_id": null
+          },
+          {
+            "id": 13390,
+            "uuid": "a42cf4e3-ec20-452a-a51b-b4f84313def9",
+            "title": "Ecosystem Assessment and Management",
+            "parent_id": 13385,
+            "parent_uuid": "e32043b4-8450-4660-9345-5ebd20436733",
+            "path": "",
+            "source_id": null,
+            "taxonomy_id": null
+          },
+          {
+            "id": 13578,
+            "uuid": "c9376db2-dd6d-47f1-a329-d1691fc5b485",
+            "title": "Biological Sciences",
+            "parent_id": null,
+            "parent_uuid": null,
+            "path": "",
+            "source_id": null,
+            "taxonomy_id": null
+          },
+          {
+            "id": 13385,
+            "uuid": "e32043b4-8450-4660-9345-5ebd20436733",
+            "title": "Environment",
+            "parent_id": null,
+            "parent_uuid": null,
+            "path": "",
+            "source_id": null,
+            "taxonomy_id": null
+          }
+        ],
+        "references": [],
+        "has_linked_file": false,
+        "citation": null,
+        "is_embargoed": false,
+        "embargo_date": null,
+        "embargo_type": null,
+        "embargo_title": "",
+        "embargo_reason": "",
+        "embargo_options": [],
+        "id": null,
+        "uuid": "fe23a0c6-b13a-49c5-accf-a09dc211983d",
+        "title": "Data associated with the article \"A spatiotemporal framework to assess the bio-geomorphic interplay of saltmarsh vegetation and tidal emergence (Western Scheldt estuary)\"",
+        "doi": "10.4121/fe23a0c6-b13a-49c5-accf-a09dc211983d.v1",
+        "handle": "",
+        "url": "https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+        "published_date": "2024-12-23T08:51:06",
+        "thumb": "",
+        "defined_type": 3,
+        "defined_type_name": "dataset",
+        "group_id": 34892,
+        "url_private_api": "https://data.4tu.nl/v2/account/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+        "url_public_api": "https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+        "url_private_html": "https://data.4tu.nl/my/datasets/fe23a0c6-b13a-49c5-accf-a09dc211983d/edit",
+        "url_public_html": "https://data.4tu.nl/datasets/fe23a0c6-b13a-49c5-accf-a09dc211983d/1",
+        "timeline": {
+          "posted": "2024-12-23T08:51:06",
+          "revision": null,
+          "submission": null,
+          "firstOnline": "2024-12-23T08:51:05",
+          "publisherPublication": null
+        },
+        "resource_title": "A spatiotemporal framework to assess the bio-geomorphic interplay of saltmarsh vegetation and tidal emergence (Western Scheldt estuary)",
+        "resource_doi": "10.1016/j.jag.2024.104337",
+        "agreed_to_deposit_agreement": true,
+        "agreed_to_publish": true
+      }
+    },
+    {
+      "operationId": "listArticleFiles",
+      "request": "GET https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d/files",
+      "status": 200,
+      "content_type": "application/json",
+      "response": [
+        {
+          "id": null,
+          "uuid": "a57f7093-8bd6-4012-9ae1-6459b5d1dae8",
+          "name": "Data_Repository.zip",
+          "size": 23968947,
+          "is_link_only": false,
+          "is_incomplete": false,
+          "download_url": "https://data.4tu.nl/file/fe23a0c6-b13a-49c5-accf-a09dc211983d/a57f7093-8bd6-4012-9ae1-6459b5d1dae8",
+          "supplied_md5": null,
+          "computed_md5": "d25cb8f6372b5cd71ee6298f5f369ca4"
+        }
+      ]
+    },
+    {
+      "operationId": "listCollections",
+      "request": "GET https://data.4tu.nl/v2/collections?limit=1",
+      "status": 200,
+      "content_type": "application/json",
+      "response": [
+        {
+          "id": 5065463,
+          "uuid": "f5010a66-86a6-4a59-8818-f1775d83bd3f",
+          "title": "Hotterdam: Urban heat in Rotterdam and health effects",
+          "doi": "10.4121/uuid:be41b523-1f1a-4f46-82d1-09c2c24f357b",
+          "handle": "",
+          "url": "https://data.4tu.nl/v2/collections/f5010a66-86a6-4a59-8818-f1775d83bd3f",
+          "timeline": {
+            "posted": "2015-12-11T00:00:00",
+            "submission": null,
+            "revision": "2020-07-17T11:21:16",
+            "firstOnline": "2015-12-11T00:00:00",
+            "publisherPublication": "2015-12-11T00:00:00"
+          },
+          "published_date": "2015-12-11T00:00:00"
+        }
+      ]
+    },
+    {
+      "operationId": "listLicenses",
+      "request": "GET https://data.4tu.nl/v2/licenses",
+      "status": 200,
+      "content_type": "application/json",
+      "response": [
+        {
+          "value": 1,
+          "name": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/",
+          "type": "data"
+        },
+        {
+          "value": 10,
+          "name": "CC BY-NC 4.0",
+          "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+          "type": "data"
+        },
+        {
+          "value": 12,
+          "name": "CC BY-NC-ND 4.0",
+          "url": "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+          "type": "data"
+        },
+        {
+          "value": 61,
+          "name": "CC BY-NC-SA 3.0",
+          "url": "https://creativecommons.org/licenses/by-nc-sa/3.0/",
+          "type": "data"
+        },
+        {
+          "value": 11,
+          "name": "CC BY-NC-SA 4.0",
+          "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "type": "data"
+        },
+        {
+          "value": 9,
+          "name": "CC BY-ND 4.0",
+          "url": "https://creativecommons.org/licenses/by-nd/4.0/",
+          "type": "data"
+        },
+        {
+          "value": 8,
+          "name": "CC BY-SA 4.0",
+          "url": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "type": "data"
+        },
+        {
+          "value": 998,
+          "name": "CC-BY-NC-SA 3.0 IGO",
+          "url": "https://creativecommons.org/licenses/by-nc-sa/3.0/igo/",
+          "type": "data"
+        },
+        {
+          "value": 2,
+          "name": "CC0",
+          "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "type": "data"
+        },
+        {
+          "value": 997,
+          "name": "ODbL-1.0",
+          "url": "https://opendatacommons.org/licenses/odbl/1-0/",
+          "type": "data"
+        },
+        {
+          "value": 994,
+          "name": "CERN-OHL-P-2.0",
+          "url": "https://opensource.org/license/cern-ohl-p",
+          "type": "hardware"
+        },
+        {
+          "value": 996,
+          "name": "CERN-OHL-S-2.0",
+          "url": "https://opensource.org/license/cern-ohl-s",
+          "type": "hardware"
+        },
+        {
+          "value": 995,
+          "name": "CERN-OHL-W-2.0",
+          "url": "https://opensource.org/license/cern-ohl-w",
+          "type": "hardware"
+        },
+        {
+          "value": 98,
+          "name": "4TU General Terms of Use",
+          "url": "https://doi.org/10.4121/resource:terms_of_use",
+          "type": "legacy"
+        },
+        {
+          "value": 149,
+          "name": "Restrictive Licence",
+          "url": "https://data.4tu.nl/info/fileadmin/user_upload/Documenten/4TU.ResearchData_Restricted_Data_2022.pdf",
+          "type": "legacy"
+        },
+        {
+          "value": 85,
+          "name": "AGPL-3.0",
+          "url": "https://www.gnu.org/licenses/agpl-3.0.en.html",
+          "type": "software"
+        },
+        {
+          "value": 145,
+          "name": "Apache-2.0",
+          "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
+          "type": "software"
+        },
+        {
+          "value": 148,
+          "name": "BSD-3-Clause",
+          "url": "https://opensource.org/licenses/BSD-3-Clause",
+          "type": "software"
+        },
+        {
+          "value": 99,
+          "name": "EUPL-1.2",
+          "url": "https://opensource.org/licenses/EUPL-1.2",
+          "type": "software"
+        },
+        {
+          "value": 88,
+          "name": "GPL-2.0",
+          "url": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+          "type": "software"
+        },
+        {
+          "value": 94,
+          "name": "GPL-3.0",
+          "url": "https://www.gnu.org/licenses/gpl-3.0.html",
+          "type": "software"
+        },
+        {
+          "value": 86,
+          "name": "LGPL-3.0",
+          "url": "https://www.gnu.org/licenses/lgpl-3.0.en.html",
+          "type": "software"
+        },
+        {
+          "value": 3,
+          "name": "MIT",
+          "url": "https://opensource.org/licenses/MIT",
+          "type": "software"
+        },
+        {
+          "value": 999,
+          "name": "MPL 2.0",
+          "url": "https://www.mozilla.org/en-US/MPL/2.0/",
+          "type": "software"
+        }
+      ]
+    },
+    {
+      "operationId": "listDatasets",
+      "request": "GET https://data.4tu.nl/v3/datasets?limit=1",
+      "status": 200,
+      "content_type": "application/json",
+      "response": [
+        {
+          "id": null,
+          "uuid": "fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "title": "Data associated with the article \"A spatiotemporal framework to assess the bio-geomorphic interplay of saltmarsh vegetation and tidal emergence (Western Scheldt estuary)\"",
+          "doi": "10.4121/fe23a0c6-b13a-49c5-accf-a09dc211983d.v1",
+          "handle": null,
+          "url": "https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "published_date": "2024-12-23T08:51:06",
+          "thumb": null,
+          "defined_type": 3,
+          "defined_type_name": "dataset",
+          "group_id": 34892,
+          "url_private_api": "https://data.4tu.nl/v2/account/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "url_public_api": "https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d",
+          "url_private_html": "https://data.4tu.nl/my/datasets/fe23a0c6-b13a-49c5-accf-a09dc211983d/edit",
+          "url_public_html": "https://data.4tu.nl/datasets/fe23a0c6-b13a-49c5-accf-a09dc211983d/1",
+          "timeline": {
+            "posted": "2024-12-23T08:51:06",
+            "firstOnline": "2024-12-23T08:51:05",
+            "revision": null
+          },
+          "resource_title": "A spatiotemporal framework to assess the bio-geomorphic interplay of saltmarsh vegetation and tidal emergence (Western Scheldt estuary)",
+          "resource_doi": "10.1016/j.jag.2024.104337"
+        }
+      ]
+    },
+    {
+      "operationId": "listGroups",
+      "request": "GET https://data.4tu.nl/v3/groups",
+      "status": 200,
+      "content_type": "application/json",
+      "response": [
+        {
+          "id": 28586,
+          "parent_id": 28585,
+          "name": "Delft University of Technology",
+          "association": "tudelft.nl",
+          "is_featured": true
+        },
+        {
+          "id": 28589,
+          "parent_id": 28585,
+          "name": "Eindhoven University of Technology",
+          "association": "tue.nl",
+          "is_featured": true
+        },
+        {
+          "id": 28628,
+          "parent_id": 28586,
+          "name": "Delft University of Technology Students",
+          "association": "student.tudelft.nl",
+          "is_featured": true
+        },
+        {
+          "id": 28634,
+          "parent_id": 28592,
+          "name": "University of Twente Students",
+          "association": "student.utwente.nl",
+          "is_featured": true
+        },
+        {
+          "id": 28631,
+          "parent_id": 28589,
+          "name": "Eindhoven University of Technology Students",
+          "association": "student.tue.nl",
+          "is_featured": true
+        },
+        {
+          "id": 28592,
+          "parent_id": 28585,
+          "name": "University of Twente",
+          "association": "utwente.nl",
+          "is_featured": true
+        },
+        {
+          "id": 28595,
+          "parent_id": 28585,
+          "name": "Wageningen University and Research",
+          "association": "wur.nl",
+          "is_featured": true
+        },
+        {
+          "id": 28598,
+          "parent_id": 28585,
+          "name": "Other institutions",
+          "association": "nogroup",
+          "is_featured": true
+        },
+        {
+          "id": 28900,
+          "parent_id": 28598,
+          "name": "The Netherlands Cancer Institute",
+          "association": "nki.nl",
+          "is_featured": null
+        },
+        {
+          "id": 35313,
+          "parent_id": 34901,
+          "name": "University of Amsterdam Students",
+          "association": "student.uva.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34919,
+          "parent_id": 28598,
+          "name": "Maastricht University",
+          "association": "maastrichtuniversity.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34907,
+          "parent_id": 28598,
+          "name": "Deltares",
+          "association": "deltares.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34892,
+          "parent_id": 28598,
+          "name": "NIOZ Royal Netherlands Institute for Sea Research",
+          "association": "nioz.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34916,
+          "parent_id": 28598,
+          "name": "University of Groningen",
+          "association": "rug.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34901,
+          "parent_id": 28598,
+          "name": "University of Amsterdam",
+          "association": "uva.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34895,
+          "parent_id": 28598,
+          "name": "Leiden University",
+          "association": "leidenuniv.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34904,
+          "parent_id": 28598,
+          "name": "Erasmus University Rotterdam",
+          "association": "eur.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34913,
+          "parent_id": 28598,
+          "name": "Radboud University",
+          "association": "ru.nl",
+          "is_featured": null
+        },
+        {
+          "id": 34910,
+          "parent_id": 28598,
+          "name": "IHE Delft Institute for Water Education",
+          "association": "un-ihe.org",
+          "is_featured": null
+        },
+        {
+          "id": 34898,
+          "parent_id": 28598,
+          "name": "Utrecht University",
+          "association": "uu.nl",
+          "is_featured": null
+        },
+        {
+          "id": 28585,
+          "parent_id": 0,
+          "name": "4TU.ResearchData",
+          "association": "",
+          "is_featured": null
+        }
+      ]
+    },
+    {
+      "operationId": "listAccountArticles",
+      "request": "GET https://data.4tu.nl/v2/account/articles (no token)",
+      "status": 403,
+      "content_type": "application/json",
+      "response": {
+        "message": "Invalid or unknown session token",
+        "code": "InvalidSessionToken"
+      }
+    },
+    {
+      "operationId": "searchArticles",
+      "request": "GET https://data.4tu.nl/v2/articles/search (wrong method, shown to document the 405)",
+      "status": 405,
+      "content_type": "text/plain",
+      "response": "Acceptable methods: ['POST']"
+    }
+  ]
+}

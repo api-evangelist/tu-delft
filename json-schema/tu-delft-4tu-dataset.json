@@ -1,0 +1,361 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/tu-delft/main/json-schema/tu-delft-4tu-dataset.json",
+  "title": "4TU.ResearchData Dataset",
+  "description": "A published dataset record from the 4TU.ResearchData repository (data.4tu.nl), operated by TU Delft Library for the 4TU.Federation. Derived field-by-field from live HTTP 200 responses on 2026-08-19; 4TU publishes no schema of its own.",
+  "x-artifact": {
+    "generated": "2026-08-19",
+    "method": "derived",
+    "source": "GET https://data.4tu.nl/v2/articles/fe23a0c6-b13a-49c5-accf-a09dc211983d (HTTP 200) and GET https://data.4tu.nl/v2/articles?limit=1 (HTTP 200)",
+    "x-operator": "institution"
+  },
+  "type": "object",
+  "required": [
+    "uuid",
+    "title",
+    "doi",
+    "url"
+  ],
+  "properties": {
+    "id": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Legacy Figshare numeric identifier; null on djehuty-native records."
+    },
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The canonical identifier on this repository; supersedes id."
+    },
+    "title": {
+      "type": "string"
+    },
+    "doi": {
+      "type": "string",
+      "pattern": "^10\\.4121/",
+      "description": "Versioned DataCite DOI under the 4TU.ResearchData prefix 10.4121."
+    },
+    "handle": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "published_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "thumb": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "defined_type": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "defined_type_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "e.g. dataset, software, collection."
+    },
+    "group_id": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "description": "Depositing consortium partner; resolve against GET /v3/groups."
+    },
+    "url_private_api": {
+      "type": "string",
+      "format": "uri"
+    },
+    "url_public_api": {
+      "type": "string",
+      "format": "uri"
+    },
+    "url_private_html": {
+      "type": "string",
+      "format": "uri"
+    },
+    "url_public_html": {
+      "type": "string",
+      "format": "uri"
+    },
+    "timeline": {
+      "type": "object",
+      "description": "Publication milestone dates."
+    },
+    "resource_title": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Title of the related publication, where the dataset underpins an article."
+    },
+    "resource_doi": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "citation": {
+      "type": "string"
+    },
+    "version": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    },
+    "size": {
+      "type": "integer",
+      "description": "Total size in bytes of all attached files."
+    },
+    "created_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "modified_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "is_public": {
+      "type": "boolean"
+    },
+    "is_confidential": {
+      "type": "boolean"
+    },
+    "is_metadata_record": {
+      "type": "boolean"
+    },
+    "is_embargoed": {
+      "type": "boolean"
+    },
+    "embargo_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "embargo_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "embargo_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "funding": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "funding_list": {
+      "type": "array"
+    },
+    "custom_fields": {
+      "type": "array"
+    },
+    "figshare_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Legacy field name retained for v2 compatibility; the value points at data.4tu.nl, not figshare.com."
+    },
+    "license": {
+      "$ref": "#/$defs/License"
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Category"
+      }
+    },
+    "authors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Author"
+      }
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/File"
+      }
+    }
+  },
+  "$defs": {
+    "License": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "data",
+            "software"
+          ]
+        }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "title": {
+          "type": "string"
+        },
+        "parent_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "parent_uuid": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "source_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "taxonomy_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    },
+    "Author": {
+      "type": "object",
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "full_name": {
+          "type": "string"
+        },
+        "orcid_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "ORCID iD where supplied."
+        },
+        "is_active": {
+          "type": "boolean"
+        },
+        "url_name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "File": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "uuid": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "is_link_only": {
+          "type": "boolean"
+        },
+        "is_incomplete": {
+          "type": "boolean"
+        },
+        "download_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "supplied_md5": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "computed_md5": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

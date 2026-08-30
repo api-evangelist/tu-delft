@@ -1,0 +1,75 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes 2026-08-19 of data.4tu.nl (/v2 and /v3), api.tudelft.nl, oauth.tudelft.nl,
+  apidoc.tudelft.nl, repository.tudelft.nl and pure.tudelft.nl, plus
+  github.com/4TUResearchData/djehuty and https://djehuty.4tu.nl/.
+x-operator: institution
+note: >-
+  TU Delft's institutional API story is a story of retirement, and that is the single most
+  important lifecycle fact about this profile. The general-purpose api.tudelft.nl platform
+  (campus, buildings, courses, schedules, study results, organisation) is gone from the public
+  internet. What survives is one research-data API run by the university library on behalf of a
+  four-university consortium.
+versioning:
+  scheme: path-prefix
+  versions:
+    - id: v2
+      status: current
+      base: https://data.4tu.nl/v2
+      note: >-
+        Deliberately backward compatible with the Figshare v2 API shape so that existing
+        client code kept working through the 2023 platform migration. Richest surface —
+        articles, collections, licenses, categories, files, versions, search, account.
+      evidence: 'GET /v2/articles?limit=1 -> HTTP 200.'
+    - id: v3
+      status: current-partial
+      base: https://data.4tu.nl/v3
+      note: >-
+        djehuty's native surface. Only a subset resolves publicly: /v3/datasets and /v3/groups
+        return 200, while /v3/articles, /v3/collections, /v3/licenses, /v3/categories,
+        /v3/repositories and /v3/datasets/{uuid} all return 404 and /v3/explore/* is
+        token-gated. v3 is not yet a replacement for v2 and should not be described as one.
+      evidence: 'GET /v3/datasets?limit=1 -> 200; GET /v3/collections?limit=1 -> 404.'
+  dataset_versioning:
+    supported: true
+    evidence: 'GET /v2/articles/{uuid}/versions returns [{"version":1,"url":...}]; DOIs carry a .vN suffix.'
+  deprecation_signals:
+    sunset_header: false
+    deprecation_header: false
+    changelog: false
+    evidence: No Sunset or Deprecation headers observed; no API changelog is published by the operator. Software-level changes are visible only in the djehuty release notes on GitHub.
+retired:
+  - id: tu-delft-institutional-api
+    name: TU Delft API Platform (api.tudelft.nl)
+    status: unreachable
+    x-operator: institution
+    scope_when_live: campus, buildings, computer workspaces, educations, study-years, courses, course schedules, study results/progress, TU Delft organisation
+    evidence: >-
+      api.tudelft.nl resolves to 131.180.187.26 (DUNET / Technische Universiteit Delft) but TCP
+      connections to both port 443 and port 80 time out after 20s. oauth.tudelft.nl
+      (131.180.187.27) behaves identically. apidoc.tudelft.nl has NO DNS record.
+      The former developer's guide at api.tudelft.nl/cms/developers-guide/oauth2/ is not
+      retrievable. This surface has been removed from apis[] rather than carried as a dead
+      pointer; it is documented here so the retirement is recorded rather than forgotten.
+  - id: tu-delft-repository-oaipmh
+    name: TU Delft Repository OAI-PMH
+    status: not-found
+    x-operator: institution
+    evidence: >-
+      repository.tudelft.nl is live (HTTP 200, ~926 KB, Islandora-based per robots.txt) but no
+      OAI-PMH verb resolves on any tried path over http or https; all return the site's
+      9,928-byte soft-404 chrome. Registry entries in ROAR (roar.eprints.org/1311) and OpenAIRE
+      that advertise an OAI base URL for this repository are stale — OpenAIRE's points at
+      oai-pmh.tno.nl, which identifies itself as the TNO repository. The previously catalogued
+      apis[] entry claiming this interface has been removed.
+platform_migration:
+  from: Figshare-hosted 4TU.Centre for Research Data
+  to: djehuty (4TU.ResearchData + Nikhef, open source, EUPL)
+  year: 2023
+  significance: >-
+    This is the inverse of the failure the university pipeline exists to catch. 4TU left a
+    vendor platform and wrote its own; the v2 API only *looks* like Figshare's because
+    compatibility was a migration requirement. Judging this surface by its shape would
+    misattribute it to Figshare, and judging it by its host attributes it correctly to
+    TU Delft Library.

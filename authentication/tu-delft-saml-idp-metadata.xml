@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" entityID="https://login.tudelft.nl/sso/saml2/idp/metadata.php">
+  <md:IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" errorURL="https://login.tudelft.nl/sso/module.php/core/error/ERRORURL_CODE?ts=ERRORURL_TS&amp;rp=ERRORURL_RP&amp;tid=ERRORURL_TID&amp;ctx=ERRORURL_CTX">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIEETCCAvmgAwIBAgIJAPlfQEGrHWVOMA0GCSqGSIb3DQEBCwUAMIGeMQswCQYDVQQGEwJOTDEVMBMGA1UECAwMWnVpZC1Ib2xsYW5kMQ4wDAYDVQQHDAVEZWxmdDEmMCQGA1UECgwdVGVjaG5pc2NoZSBVbml2ZXJzaXRlaXQgRGVsZnQxFTATBgNVBAsMDElDVCBEaXJlY3RpZTEpMCcGA1UEAwwgbG9naW4udHVkZWxmdC5ubCBtZXRhZGF0YSBzaWduZXIwHhcNMjAwMTE2MTIyNDA4WhcNMzAwMTE1MTIyNDA4WjCBnjELMAkGA1UEBhMCTkwxFTATBgNVBAgMDFp1aWQtSG9sbGFuZDEOMAwGA1UEBwwFRGVsZnQxJjAkBgNVBAoMHVRlY2huaXNjaGUgVW5pdmVyc2l0ZWl0IERlbGZ0MRUwEwYDVQQLDAxJQ1QgRGlyZWN0aWUxKTAnBgNVBAMMIGxvZ2luLnR1ZGVsZnQubmwgbWV0YWRhdGEgc2lnbmVyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwZfwGzcC4i0/t/nVWwvPqJ5OV+h+hG+D4cocsylwlg7DPcxNH3fVp+skGqg29j3KtmgUR8qiSrgin4Wec/+jMLs9X/D3ulhxQ4Tax1plKeVH5VohGGCtHwkEAcm9im5zhKCcm/y9wqfNLGaLbwTHs4yPNouqf87Zz9qM7X9ONUYx6CqwfWFwDGP48plZY+8PJlSdWId6shHdHmqn7Zf61hAeii8oiGCW/lBq0VXoB1CoCl/FmDoE+aIse4wTgrt9KTnF0/3E5qwwIJq4ugkM9yXrU9qg3/HHl89bH9/mlOdaEWsK4NgPUc2gES5qHopl5jWS+YqP4Nji3dQ+fgjoZQIDAQABo1AwTjAdBgNVHQ4EFgQU8nGBmwWwq4zx+uKB2Ro9BR72vHswHwYDVR0jBBgwFoAU8nGBmwWwq4zx+uKB2Ro9BR72vHswDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAG/l8hS5V0xVaLCTKnKbf9vbKZP5dwevzfOVQO0tYX88oA2v5/6BXH1zOcHcUilZ0+ENCYeveyUDiZC7zA/w/P06WvWL/6IGUVoxwWtJYo0DCUffVzuh50QGDUrk/pdsHBtyFQdE9ZcDRGrHSyvd0NDApwLGVLeoDHkB2VDAoyfI5UXrBmaCL5+rkPbd1JPo8vHtpgD4ccL2bHefdx4feSPGOOJXyMzHFUigRbtzUUXh7hNKCHrsqvUGoY2MsD9o3lSLysDrUALxMl1GyydFzTLx03m8PCESRQ1BekMCfHA5rDqQs0QhZgeKFzaT3+zkymWhERdB/YeprbvDZz+peQg==</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:KeyDescriptor use="encryption">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIEETCCAvmgAwIBAgIJAPlfQEGrHWVOMA0GCSqGSIb3DQEBCwUAMIGeMQswCQYDVQQGEwJOTDEVMBMGA1UECAwMWnVpZC1Ib2xsYW5kMQ4wDAYDVQQHDAVEZWxmdDEmMCQGA1UECgwdVGVjaG5pc2NoZSBVbml2ZXJzaXRlaXQgRGVsZnQxFTATBgNVBAsMDElDVCBEaXJlY3RpZTEpMCcGA1UEAwwgbG9naW4udHVkZWxmdC5ubCBtZXRhZGF0YSBzaWduZXIwHhcNMjAwMTE2MTIyNDA4WhcNMzAwMTE1MTIyNDA4WjCBnjELMAkGA1UEBhMCTkwxFTATBgNVBAgMDFp1aWQtSG9sbGFuZDEOMAwGA1UEBwwFRGVsZnQxJjAkBgNVBAoMHVRlY2huaXNjaGUgVW5pdmVyc2l0ZWl0IERlbGZ0MRUwEwYDVQQLDAxJQ1QgRGlyZWN0aWUxKTAnBgNVBAMMIGxvZ2luLnR1ZGVsZnQubmwgbWV0YWRhdGEgc2lnbmVyMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwZfwGzcC4i0/t/nVWwvPqJ5OV+h+hG+D4cocsylwlg7DPcxNH3fVp+skGqg29j3KtmgUR8qiSrgin4Wec/+jMLs9X/D3ulhxQ4Tax1plKeVH5VohGGCtHwkEAcm9im5zhKCcm/y9wqfNLGaLbwTHs4yPNouqf87Zz9qM7X9ONUYx6CqwfWFwDGP48plZY+8PJlSdWId6shHdHmqn7Zf61hAeii8oiGCW/lBq0VXoB1CoCl/FmDoE+aIse4wTgrt9KTnF0/3E5qwwIJq4ugkM9yXrU9qg3/HHl89bH9/mlOdaEWsK4NgPUc2gES5qHopl5jWS+YqP4Nji3dQ+fgjoZQIDAQABo1AwTjAdBgNVHQ4EFgQU8nGBmwWwq4zx+uKB2Ro9BR72vHswHwYDVR0jBBgwFoAU8nGBmwWwq4zx+uKB2Ro9BR72vHswDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAQEAG/l8hS5V0xVaLCTKnKbf9vbKZP5dwevzfOVQO0tYX88oA2v5/6BXH1zOcHcUilZ0+ENCYeveyUDiZC7zA/w/P06WvWL/6IGUVoxwWtJYo0DCUffVzuh50QGDUrk/pdsHBtyFQdE9ZcDRGrHSyvd0NDApwLGVLeoDHkB2VDAoyfI5UXrBmaCL5+rkPbd1JPo8vHtpgD4ccL2bHefdx4feSPGOOJXyMzHFUigRbtzUUXh7hNKCHrsqvUGoY2MsD9o3lSLysDrUALxMl1GyydFzTLx03m8PCESRQ1BekMCfHA5rDqQs0QhZgeKFzaT3+zkymWhERdB/YeprbvDZz+peQg==</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://login.tudelft.nl/sso/module.php/saml/idp/singleLogout"/>
+    <md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:nameid-format:persistent</md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://login.tudelft.nl/sso/module.php/saml/idp/singleSignOnService"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://login.tudelft.nl/sso/module.php/saml/idp/singleSignOnService"/>
+  </md:IDPSSODescriptor>
+  <md:ContactPerson contactType="technical">
+    <md:GivenName>tu-ict-middleware</md:GivenName>
+    <md:EmailAddress>mailto:middleware-ictfm@tudelft.nl</md:EmailAddress>
+  </md:ContactPerson>
+</md:EntityDescriptor>

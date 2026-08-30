@@ -1,0 +1,149 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live probes on 2026-08-19 against data.4tu.nl, login.tudelft.nl, metadata.surfconext.nl,
+  repository.tudelft.nl, pure.tudelft.nl and www.tudelft.nl, plus the djehuty source tree
+  (github.com/4TUResearchData/djehuty, GitHub trees API, 575 entries) and
+  re3data record r3d100010216.
+note: >-
+  Conformance is recorded against the Kin Score `education` regime standards[] plus the
+  cross-cutting web/API standards. Every `conforms: true` below points at a specific
+  observable; every `conforms: false` was checked, not assumed. Nothing here is inferred from
+  a prose claim on an institutional web page.
+standards:
+  - id: datacite
+    conforms: true
+    x-operator: institution
+    evidence: >-
+      Every dataset record returned by GET https://data.4tu.nl/v2/articles carries a DOI under
+      the 10.4121 prefix (e.g. 10.4121/fe23a0c6-b13a-49c5-accf-a09dc211983d.v1), the DataCite
+      prefix registered to 4TU.ResearchData. DOIs are versioned (.v1) at the record level.
+    location: openapi/tu-delft-4tu-researchdata-openapi.yml#/components/schemas/DatasetSummary/properties/doi
+  - id: orcid
+    conforms: true
+    x-operator: institution
+    evidence: >-
+      The Author schema on the 4TU API exposes orcid_id, and djehuty's configuration
+      documentation describes ORCID both as a primary login identity provider and as a means of
+      coupling an author record to an ORCID iD.
+    location: openapi/tu-delft-4tu-researchdata-openapi.yml#/components/schemas/Author/properties/orcid_id
+  - id: saml
+    conforms: true
+    x-operator: institution
+    evidence: >-
+      https://login.tudelft.nl/sso/saml2/idp/metadata.php returns HTTP 200 with content-type
+      application/samlmetadata+xml and a valid md:EntityDescriptor / md:IDPSSODescriptor for
+      entityID https://login.tudelft.nl/sso/saml2/idp/metadata.php. The same entity is present
+      in the live SURFconext aggregate at https://metadata.surfconext.nl/idps-metadata.xml
+      under the display names "Technische Universiteit Delft" / "Delft University of Technology".
+    location: authentication/tu-delft-saml-idp-metadata.xml
+  - id: shibboleth
+    conforms: false
+    x-operator: institution
+    evidence: >-
+      The IdP is SimpleSAMLphp (module.php/core/error/ERRORURL_CODE error URL template), not
+      Shibboleth IdP. The SAML 2.0 protocol conformance is recorded above; the specific
+      Shibboleth implementation is not present.
+  - id: oai-pmh
+    conforms: false
+    x-operator: institution
+    evidence: >-
+      NO working OAI-PMH endpoint was found on any institution-operated host. data.4tu.nl/oai,
+      /oai/, /v2/oai all return HTTP 404 {"message":"This resource does not exist."}, and the
+      djehuty source tree contains no OAI-PMH implementation. repository.tudelft.nl returns a
+      soft 404 HTML page on /oai, /oai2, /oai/request, /server/oai/request and /islandora/oai
+      (HTTP 404, 9,928-byte site chrome) over both http and https. OpenAIRE's data-provider
+      record for the TU Delft Repository lists a base URL of https://oai-pmh.tno.nl/OaiPmh,
+      which resolves to a live OAI-PMH service whose Identify response names it the "TNO
+      repository" with adminEmail servicedesk@ingressus.nl and which reports
+      noSetHierarchy — it is not TU Delft's endpoint and carries no TU Delft set. The ROAR
+      entry for repository.tudelft.nl/oai is stale.
+  - id: oai-pmh-gated
+    conforms: partial
+    x-operator: tenant
+    evidence: >-
+      https://pure.tudelft.nl/ws/oai?verb=Identify returns HTTP 401 Unauthorized — an OAI-PMH
+      interface exists on TU Delft's Pure tenancy but is credential-gated. The interface is
+      Elsevier Pure's, not the institution's; recorded here so the 401 is not misread as absence.
+  - id: scim
+    conforms: false
+    evidence: No SCIM endpoint is published on any institution-operated host; none found on data.4tu.nl or login.tudelft.nl.
+  - id: lti
+    conforms: false
+    evidence: No LTI tool or platform registration surface is publicly published. Learning-tool integration runs inside the Brightspace tenancy, which is not publicly reachable.
+  - id: oneroster
+    conforms: false
+    evidence: No OneRoster endpoint found. The Netherlands does not use the OneRoster/Ed-Fi stack; SURF's Open Onderwijs API (OOAPI) is the regional equivalent and no TU Delft OOAPI endpoint was found either.
+  - id: ed-fi
+    conforms: false
+    evidence: Not applicable to a Dutch institution and not found.
+  - id: caliper
+    conforms: false
+    evidence: No Caliper Analytics event store or sensor endpoint published.
+  - id: qti
+    conforms: false
+    evidence: No QTI assessment interchange surface published.
+  - id: crossref
+    conforms: false
+    evidence: >-
+      TU Delft's research output DOIs are minted by DataCite (10.4121) for data and by
+      publishers for articles; no institution-operated Crossref deposit or query surface exists.
+  - id: openapi
+    conforms: false
+    x-operator: institution
+    evidence: >-
+      Neither TU Delft nor 4TU.ResearchData publishes an OpenAPI description. The djehuty
+      repository tree contains no openapi/swagger file, and docs/api.md states that "the full
+      interactive API reference will be available via the auto-generated FastAPI documentation
+      once the FastAPI refactor is complete". The OpenAPI in openapi/ is API Evangelist's
+      derivation, marked method: derived.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors use a custom {"message","code"} envelope on application/json; the 405 is text/plain. See errors/.'
+  - id: rfc9116-security-txt
+    conforms: true
+    x-operator: institution
+    evidence: >-
+      https://www.tudelft.nl/.well-known/security.txt returns HTTP 200 text/plain with Contact
+      (mailto:abuse@tudelft.nl), Expires (2027-03-19), Canonical, Preferred-Languages and two
+      Policy URLs. Note it is served on the corporate host only — data.4tu.nl returns 404.
+    location: security/tu-delft-vulnerability-disclosure.yml
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No OAuth 2.0 authorization server is reachable. /.well-known/oauth-authorization-server and
+      /.well-known/openid-configuration on data.4tu.nl both return 404; the historical
+      oauth.tudelft.nl service times out on ports 80 and 443.
+  - id: oidc
+    conforms: false
+    evidence: https://login.tudelft.nl/.well-known/openid-configuration returns HTTP 403. No discovery document is served.
+  - id: llms-txt
+    conforms: false
+    evidence: https://www.tudelft.nl/llms.txt and https://data.4tu.nl/llms.txt both return HTTP 404.
+  - id: ro-crate
+    conforms: partial
+    x-operator: institution
+    evidence: >-
+      djehuty's end-to-end test suite includes tests/e2e/tests/api/v3/test_ro_crate.py, so an
+      RO-Crate export path exists in the software. No public unauthenticated RO-Crate endpoint
+      answered on data.4tu.nl, so this is recorded as partial rather than true.
+  - id: iiif
+    conforms: partial
+    x-operator: institution
+    evidence: >-
+      4TU.ResearchData documents serving eligible image datasets through the International
+      Image Interoperability Framework at
+      https://data.4tu.nl/info/about-your-data/iiif (HTTP 200), describing standard
+      machine-readable image APIs rather than plain file downloads. No public IIIF root or
+      manifest index was located — https://data.4tu.nl/iiif and /v3/iiif return HTTP 404 and
+      iiif.4tu.nl does not answer — so manifests appear to be dataset-scoped. Recorded as
+      partial: the operator's claim is documented, the endpoint was not reachable to confirm.
+  - id: netcdf-opendap
+    conforms: false
+    x-operator: institution
+    evidence: >-
+      https://data.4tu.nl/info/about-your-data/netcdf-and-opendap (HTTP 200) documents an
+      OPeNDAP/THREDDS service at https://opendap.4tu.nl/thredds/catalog/catalog.html, and
+      re3data r3d100010216 lists it as an API. Both the .html and .xml catalog endpoints time
+      out from the public internet (no response in 25s), so the surface is documented but not
+      reachable and is not credited.

@@ -1,0 +1,131 @@
+openapi: 3.2.0
+info:
+  title: 4TU.ResearchData Collections API
+  version: v2+v3
+  summary: Public read API for the 4TU.ResearchData repository operated by TU Delft Library.
+  description: 'Public, unauthenticated read interface to the 4TU.ResearchData repository at https://data.4tu.nl, the science/engineering/design research data repository of the 4TU.Federation. The service runs on `djehuty`, open-source repository software written by 4TU.ResearchData and Nikhef — it is NOT a Figshare, Elsevier Pure, Dataverse or DSpace tenancy. The `/v2` surface is deliberately backward compatible with the Figshare v2 API shape (differences: `uuid` supersedes `id`, and usage errors return precise HTTP codes rather than always 400); `/v3` is djehuty''s own surface. Endpoints under `/v2/account/` and parts of `/v3` require a personal API token.
+
+    OPERATOR NOTE: data.4tu.nl resolves to 131.180.169.22, inside the RIPE `DUNET` inetnum registered to Technische Universiteit Delft, and re3data records TU Delft Library as the hosting institution for the 4TU.Federation consortium (with TU Eindhoven, University of Twente and Wageningen University as the other partners). It is therefore institution-operated infrastructure that is co-owned by a four-university consortium, not a vendor platform.'
+  contact:
+    name: 4TU.ResearchData
+    email: researchdata@4tu.nl
+    url: https://data.4tu.nl/info/about-4turesearchdata/contact
+  license:
+    name: EUPL-1.2 (djehuty software)
+    url: https://github.com/4TUResearchData/djehuty/blob/main/LICENSE
+  termsOfService: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+servers:
+- url: https://data.4tu.nl
+  description: 4TU.ResearchData production (TU Delft Library operated)
+tags:
+- name: Collections
+  description: Curated groupings of published datasets.
+paths:
+  /v2/collections:
+    get:
+      tags:
+      - Collections
+      operationId: listCollections
+      summary: List published collections
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: A list of collection summaries.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CollectionSummary'
+  /v2/collections/{uuid}:
+    get:
+      tags:
+      - Collections
+      operationId: getCollection
+      summary: Get one published collection
+      parameters:
+      - $ref: '#/components/parameters/Uuid'
+      responses:
+        '200':
+          description: The full collection record.
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    CollectionSummary:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        uuid:
+          type: string
+          format: uuid
+        title:
+          type: string
+        doi:
+          type: string
+        handle:
+          type: string
+        url:
+          type: string
+          format: uri
+        timeline:
+          type: object
+        published_date:
+          type:
+          - string
+          - 'null'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  parameters:
+    Uuid:
+      name: uuid
+      in: path
+      required: true
+      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
+      schema:
+        type: string
+        format: uuid
+  responses:
+    NotFound:
+      description: The resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            notFound:
+              value:
+                message: This resource does not exist.
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: token
+      description: '`Authorization: token YOUR_TOKEN_HERE`. Tokens are issued from the depositor dashboard after logging in; there is no OAuth 2.0 flow and no published scope vocabulary.'
+x-artifact:
+  generated: '2026-08-19'
+  method: derived
+  source: Derived from live unauthenticated probes of https://data.4tu.nl on 2026-08-19 (every path, parameter, status code and field name in this document was observed in a real response), cross-read against the djehuty API documentation at https://raw.githubusercontent.com/4TUResearchData/djehuty/main/docs/api.md and https://djehuty.4tu.nl/. 4TU.ResearchData publishes no OpenAPI of its own; the djehuty repository tree contains no openapi/swagger file (checked via the GitHub trees API, 575 entries). This is API Evangelist's derivation, not a 4TU artifact.
+  x-operator: institution
+  x-operator-evidence: data.4tu.nl -> 131.180.169.22, RIPE inetnum 131.180.0.0/16 netname DUNET, org-name "Technische Universiteit Delft". re3data r3d100010216 lists TU Delft Library as a hosting institution alongside the 4TU.Federation.

@@ -1,0 +1,22 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  https://data.4tu.nl/v2/account/articles (HTTP 403), djehuty docs/api.md, and a check for
+  https://data.4tu.nl/.well-known/openid-configuration and /.well-known/oauth-authorization-server
+  (both HTTP 404, "This resource does not exist.").
+x-operator: institution
+scopes_published: false
+note: >-
+  TU Delft publishes no authorization scope vocabulary for any surface it operates. The only
+  public institutional API, 4TU.ResearchData, authorizes with an opaque personal bearer token
+  that carries no scope claims; there is no OAuth 2.0 authorization server, no OIDC discovery
+  document, and no consent screen enumerating permissions. This file records the absence
+  deliberately rather than leaving the slot empty — an empty scopes/ directory reads as
+  "not checked", and this was checked.
+scopes: []
+authorization_model:
+  type: all-or-nothing-token
+  granularity: account
+  delegation: none
+  consent_surface: none
+  revocation: Token can be revoked from the depositor dashboard; no programmatic revocation endpoint found.

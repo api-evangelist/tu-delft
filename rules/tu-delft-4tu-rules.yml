@@ -1,0 +1,81 @@
+# Spectral ruleset for the derived 4TU.ResearchData OpenAPI.
+# generated: '2026-08-19'
+# method: generated
+# source: >-
+#   Written by API Evangelist against openapi/tu-delft-4tu-researchdata-openapi.yml. This is
+#   OUR governance ruleset for OUR derived description — 4TU.ResearchData publishes no ruleset
+#   and none is implied here. Built-in Spectral functions only.
+# x-operator: institution
+extends: [[spectral:oas, off]]
+rules:
+  tu-delft-info-contact:
+    description: The description must name a reachable operator contact.
+    given: $.info
+    severity: error
+    then:
+      field: contact
+      function: truthy
+  tu-delft-server-is-institutional:
+    description: The only server may be data.4tu.nl — a vendor host here would be a misattribution.
+    given: $.servers[*].url
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: '^https://data\.4tu\.nl$'
+  tu-delft-operation-id:
+    description: Every operation carries an operationId.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+  tu-delft-operation-tagged:
+    description: Every operation is tagged so the description can be split by resource.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: error
+    then:
+      field: tags
+      function: truthy
+  tu-delft-operation-summary:
+    description: Every operation carries a summary.
+    given: $.paths[*][get,post,put,patch,delete]
+    severity: warn
+    then:
+      field: summary
+      function: truthy
+  tu-delft-404-documented:
+    description: Every path that takes a uuid must document the 404 the service actually returns.
+    given: $.paths[?(@property.match(/\{uuid\}/))][get]
+    severity: error
+    then:
+      field: responses.404
+      function: truthy
+  tu-delft-account-secured:
+    description: Endpoints under /v2/account/ must declare tokenAuth.
+    given: $.paths[?(@property.match(/^\/v2\/account\//))][get,post,put,delete]
+    severity: error
+    then:
+      field: security
+      function: truthy
+  tu-delft-uuid-format:
+    description: The uuid path parameter must be typed as a uuid, not a bare string.
+    given: $.components.parameters.Uuid.schema
+    severity: warn
+    then:
+      field: format
+      function: truthy
+  tu-delft-provenance-block:
+    description: The description must carry the x-artifact provenance block; an unmarked artifact is credited to the institution.
+    given: $
+    severity: error
+    then:
+      field: x-artifact
+      function: truthy
+  tu-delft-operator-declared:
+    description: The provenance block must declare who operates the thing described.
+    given: $.x-artifact
+    severity: error
+    then:
+      field: x-operator
+      function: truthy

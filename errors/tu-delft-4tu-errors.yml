@@ -1,0 +1,41 @@
+generated: '2026-08-19'
+method: probed
+source: >-
+  Real error bodies captured from https://data.4tu.nl on 2026-08-19 by requesting nonexistent
+  paths, a token-gated path without a token, and a POST-only path with GET.
+x-operator: institution
+media_type: application/json
+problem_details_rfc9457: false
+note: >-
+  djehuty returns a small custom envelope — {"message": ...} with an optional "code" — on
+  application/json, not RFC 9457 application/problem+json. It does honour precise HTTP status
+  codes, which is an explicit, documented improvement over the Figshare v2 API it is otherwise
+  compatible with (Figshare returns 400 for most usage errors). There is no error catalogue
+  published by the operator; the codes below are the ones actually observed.
+errors:
+  - status: 404
+    code: null
+    body: { message: 'This resource does not exist.' }
+    meaning: Unknown path, unknown UUID, or a v3 resource name that does not exist on this deployment.
+    observed_at:
+      - GET /v3/articles
+      - GET /v2/institutions
+      - GET /v2/authors
+      - GET /oai?verb=Identify
+      - GET /.well-known/security.txt
+  - status: 403
+    code: InvalidSessionToken
+    body: { message: 'Invalid or unknown session token', code: InvalidSessionToken }
+    meaning: A /v2/account/ or gated /v3 endpoint was called without a valid personal API token.
+    observed_at:
+      - GET /v2/account/articles
+      - GET /v3/explore/types
+  - status: 405
+    code: null
+    body: "Acceptable methods: ['POST']"
+    media_type: text/plain
+    meaning: >-
+      Correct path, wrong HTTP method. Note the response is a Python list repr on text/plain,
+      not JSON — a client that assumes application/json on every error will fail to parse this one.
+    observed_at:
+      - GET /v2/articles/search

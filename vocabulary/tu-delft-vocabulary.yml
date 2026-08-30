@@ -1,0 +1,53 @@
+generated: '2026-08-19'
+method: derived
+source: >-
+  Derived from live 4TU.ResearchData API responses on 2026-08-19 (GET /v2/licenses,
+  GET /v2/categories, GET /v3/groups, GET /v2/articles/{uuid}), the djehuty documentation at
+  https://djehuty.4tu.nl/, and the SURFconext SAML metadata aggregate.
+x-operator: institution
+note: >-
+  The controlled vocabularies below are the operator's own, retrieved from the running service.
+  Nothing here is invented; the terms that describe TU Delft's institutional posture rather than
+  the API are marked as such.
+vocabularies:
+  - id: licenses
+    name: Deposit licenses
+    endpoint: https://data.4tu.nl/v2/licenses
+    machine_readable: true
+    terms_observed: ['CC BY 4.0', 'CC BY-NC 4.0', 'CC BY-NC-ND 4.0', 'CC0 1.0', 'and further data and software licenses split by type']
+    discriminator: 'type: data | software'
+  - id: categories
+    name: Subject taxonomy
+    endpoint: https://data.4tu.nl/v2/categories
+    machine_readable: true
+    shape: 'Hierarchical, parent_id/parent_uuid; ~65 KB of terms in one response.'
+    examples: ['Mining and Extraction of Energy Resources', 'Bioinformatics and Theoretical Biology', 'Water Research', 'Urbanism, Spatial Planning, Transportation and Infrastructure Planning']
+  - id: groups
+    name: Depositing institutions
+    endpoint: https://data.4tu.nl/v3/groups
+    machine_readable: true
+    terms:
+      - { name: Delft University of Technology, association: tudelft.nl }
+      - { name: Eindhoven University of Technology, association: tue.nl }
+      - { name: University of Twente, association: utwente.nl }
+      - { name: Wageningen University and Research, association: wur.nl }
+    significance: >-
+      This endpoint is the machine-readable proof that data.4tu.nl is a four-university
+      consortium surface. TU Delft is one group inside it, not its sole owner — even though
+      TU Delft Library hosts and operates the service.
+  - id: defined-types
+    name: Deposit types
+    source_field: defined_type_name
+    machine_readable: true
+    terms_observed: [dataset, software, collection]
+  - id: institutional-terms
+    name: Institutional vocabulary (not an API vocabulary)
+    machine_readable: false
+    terms:
+      - { term: NetID, meaning: 'TU Delft account identity used for SSO across institutional services.' }
+      - { term: SURFconext, meaning: 'The Dutch national identity federation operated by SURF, into which TU Delft publishes its IdP; upstream of eduGAIN.' }
+      - { term: SRAM, meaning: 'SURF Research Access Management — collaboration-based access used to onboard 4TU depositors.' }
+      - { term: DelftBlue, meaning: 'TU Delft''s institutional supercomputer, run by the Delft High Performance Computing Centre (DHPC).' }
+      - { term: djehuty, meaning: 'The open-source repository system written by 4TU.ResearchData and Nikhef that runs data.4tu.nl.' }
+      - { term: 4TU.Federation, meaning: 'The alliance of the four Dutch technical universities that owns 4TU.ResearchData.' }
+      - { term: Pure, meaning: 'Elsevier''s research information system; TU Delft runs a tenancy at pure.tudelft.nl / research.tudelft.nl. Vendor contract, institutional data.' }
