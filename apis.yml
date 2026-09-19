@@ -164,6 +164,12 @@ apis:
   baseURL: https://pure.tudelft.nl/ws
   tags:
   - Research Information
+  - CRI
+  - Tenants
+  - Elsevier Pure
+  - Gated
+  tags_raw:
+  - Research Information
   - CRIS
   - Tenant
   - Elsevier Pure
