@@ -3,9 +3,7 @@ info:
   title: 4TU.ResearchData Account API
   version: v2+v3
   summary: Public read API for the 4TU.ResearchData repository operated by TU Delft Library.
-  description: 'Public, unauthenticated read interface to the 4TU.ResearchData repository at https://data.4tu.nl, the science/engineering/design research data repository of the 4TU.Federation. The service runs on `djehuty`, open-source repository software written by 4TU.ResearchData and Nikhef — it is NOT a Figshare, Elsevier Pure, Dataverse or DSpace tenancy. The `/v2` surface is deliberately backward compatible with the Figshare v2 API shape (differences: `uuid` supersedes `id`, and usage errors return precise HTTP codes rather than always 400); `/v3` is djehuty''s own surface. Endpoints under `/v2/account/` and parts of `/v3` require a personal API token.
-
-    OPERATOR NOTE: data.4tu.nl resolves to 131.180.169.22, inside the RIPE `DUNET` inetnum registered to Technische Universiteit Delft, and re3data records TU Delft Library as the hosting institution for the 4TU.Federation consortium (with TU Eindhoven, University of Twente and Wageningen University as the other partners). It is therefore institution-operated infrastructure that is co-owned by a four-university consortium, not a vendor platform.'
+  description: Public, unauthenticated read interface to the 4TU.ResearchData repository at https://data.4tu.nl, the science/engineering/design research data repository of the 4TU.Federation.
   contact:
     name: 4TU.ResearchData
     email: researchdata@4tu.nl
@@ -41,19 +39,14 @@ paths:
         '403':
           $ref: '#/components/responses/InvalidSessionToken'
 components:
-  responses:
-    InvalidSessionToken:
-      description: No token, or an unrecognised token, was supplied.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            invalidToken:
-              value:
-                message: Invalid or unknown session token
-                code: InvalidSessionToken
   schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
     DatasetSummary:
       type: object
       properties:
@@ -119,13 +112,18 @@ components:
           type:
           - string
           - 'null'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
+  responses:
+    InvalidSessionToken:
+      description: No token, or an unrecognised token, was supplied.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            invalidToken:
+              value:
+                message: Invalid or unknown session token
+                code: InvalidSessionToken
   securitySchemes:
     tokenAuth:
       type: http

@@ -1,0 +1,26 @@
+{
+  "provider": "tu-delft",
+  "sources": [
+    "_original/tu-delft-4tu-researchdata-openapi.yml"
+  ],
+  "outputs": [
+    "tu-delft-account-api-openapi.yml",
+    "tu-delft-collections-api-openapi.yml",
+    "tu-delft-datasets-api-openapi.yml",
+    "tu-delft-reference-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "tu-delft-4tu-researchdata-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "tu-delft-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tu-delft-collections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tu-delft-datasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tu-delft-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

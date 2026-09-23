@@ -1,0 +1,394 @@
+openapi: 3.1.0
+info:
+  title: 4TU.ResearchData API
+  version: v2+v3
+  summary: Public read API for the 4TU.ResearchData repository operated by TU Delft Library.
+  description: >-
+    Public, unauthenticated read interface to the 4TU.ResearchData repository at
+    https://data.4tu.nl, the science/engineering/design research data repository of the
+    4TU.Federation. The service runs on `djehuty`, open-source repository software written by
+    4TU.ResearchData and Nikhef — it is NOT a Figshare, Elsevier Pure, Dataverse or DSpace
+    tenancy. The `/v2` surface is deliberately backward compatible with the Figshare v2 API
+    shape (differences: `uuid` supersedes `id`, and usage errors return precise HTTP codes
+    rather than always 400); `/v3` is djehuty's own surface. Endpoints under `/v2/account/`
+    and parts of `/v3` require a personal API token.
+
+    OPERATOR NOTE: data.4tu.nl resolves to 131.180.169.22, inside the RIPE `DUNET` inetnum
+    registered to Technische Universiteit Delft, and re3data records TU Delft Library as the
+    hosting institution for the 4TU.Federation consortium (with TU Eindhoven, University of
+    Twente and Wageningen University as the other partners). It is therefore institution-operated
+    infrastructure that is co-owned by a four-university consortium, not a vendor platform.
+  contact:
+    name: 4TU.ResearchData
+    email: researchdata@4tu.nl
+    url: https://data.4tu.nl/info/about-4turesearchdata/contact
+  license:
+    name: EUPL-1.2 (djehuty software)
+    url: https://github.com/4TUResearchData/djehuty/blob/main/LICENSE
+  termsOfService: https://data.4tu.nl/info/about-4turesearchdata/policies-guidelines
+servers:
+  - url: https://data.4tu.nl
+    description: 4TU.ResearchData production (TU Delft Library operated)
+tags:
+  - name: Datasets
+    description: Published datasets (called "articles" on the Figshare-compatible v2 surface).
+  - name: Collections
+    description: Curated groupings of published datasets.
+  - name: Reference
+    description: Controlled vocabularies — licenses, categories and depositing groups.
+  - name: Account
+    description: Token-authenticated endpoints scoped to a depositor account.
+paths:
+  /v2/articles:
+    get:
+      tags: [Datasets]
+      operationId: listArticles
+      summary: List published datasets
+      description: Returns a page of publicly published datasets, newest first by default.
+      parameters:
+        - { name: limit,  in: query, required: false, schema: { type: integer, minimum: 1, maximum: 1000, default: 10 } }
+        - { name: offset, in: query, required: false, schema: { type: integer, minimum: 0 } }
+        - { name: order,  in: query, required: false, schema: { type: string, examples: [published_date] } }
+        - { name: order_direction, in: query, required: false, schema: { type: string, enum: [asc, desc] } }
+        - { name: institution, in: query, required: false, schema: { type: integer } }
+      responses:
+        '200':
+          description: A list of dataset summaries.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/DatasetSummary' } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /v2/articles/search:
+    post:
+      tags: [Datasets]
+      operationId: searchArticles
+      summary: Search published datasets
+      description: >-
+        Full-text and faceted search over published datasets. A GET against this path returns
+        405 with the body `Acceptable methods: ['POST']`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search_for: { type: string }
+                limit: { type: integer }
+                offset: { type: integer }
+                order: { type: string }
+                order_direction: { type: string, enum: [asc, desc] }
+      responses:
+        '200':
+          description: Matching dataset summaries.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/DatasetSummary' } }
+        '405': { $ref: '#/components/responses/MethodNotAllowed' }
+  /v2/articles/{uuid}:
+    get:
+      tags: [Datasets]
+      operationId: getArticle
+      summary: Get one published dataset
+      parameters: [ { $ref: '#/components/parameters/Uuid' } ]
+      responses:
+        '200':
+          description: The full dataset record, including files, authors, funding and license.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Dataset' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /v2/articles/{uuid}/files:
+    get:
+      tags: [Datasets]
+      operationId: listArticleFiles
+      summary: List the files attached to a dataset
+      parameters: [ { $ref: '#/components/parameters/Uuid' } ]
+      responses:
+        '200':
+          description: Files, with size and both supplied and computed MD5 checksums.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/File' } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /v2/articles/{uuid}/versions:
+    get:
+      tags: [Datasets]
+      operationId: listArticleVersions
+      summary: List the published versions of a dataset
+      parameters: [ { $ref: '#/components/parameters/Uuid' } ]
+      responses:
+        '200':
+          description: Version numbers with their canonical API URLs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    version: { type: integer }
+                    url: { type: string, format: uri }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /v2/collections:
+    get:
+      tags: [Collections]
+      operationId: listCollections
+      summary: List published collections
+      parameters:
+        - { name: limit,  in: query, required: false, schema: { type: integer } }
+        - { name: offset, in: query, required: false, schema: { type: integer } }
+      responses:
+        '200':
+          description: A list of collection summaries.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/CollectionSummary' } }
+  /v2/collections/{uuid}:
+    get:
+      tags: [Collections]
+      operationId: getCollection
+      summary: Get one published collection
+      parameters: [ { $ref: '#/components/parameters/Uuid' } ]
+      responses:
+        '200':
+          description: The full collection record.
+          content:
+            application/json:
+              schema: { type: object }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /v2/licenses:
+    get:
+      tags: [Reference]
+      operationId: listLicenses
+      summary: List the licenses a depositor may apply
+      responses:
+        '200':
+          description: Licenses offered for data and for software deposits.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/License' } }
+  /v2/categories:
+    get:
+      tags: [Reference]
+      operationId: listCategories
+      summary: List the subject category taxonomy
+      responses:
+        '200':
+          description: The hierarchical subject taxonomy, with parent UUIDs.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Category' } }
+  /v3/datasets:
+    get:
+      tags: [Datasets]
+      operationId: listDatasets
+      summary: List published datasets (djehuty v3)
+      description: >-
+        djehuty's own dataset listing. Same record shape as /v2/articles; note that the
+        `url` field in each record still points back at the /v2 path.
+      parameters:
+        - { name: limit,  in: query, required: false, schema: { type: integer } }
+        - { name: offset, in: query, required: false, schema: { type: integer } }
+        - { name: order,  in: query, required: false, schema: { type: string } }
+        - { name: order_direction, in: query, required: false, schema: { type: string, enum: [asc, desc] } }
+      responses:
+        '200':
+          description: A list of dataset summaries.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/DatasetSummary' } }
+  /v3/groups:
+    get:
+      tags: [Reference]
+      operationId: listGroups
+      summary: List the depositing institutions
+      description: >-
+        The consortium partners a dataset can be associated with. Delft University of
+        Technology appears here as one group among the 4TU partners — direct evidence that
+        this repository is a consortium surface, not a single-institution one.
+      responses:
+        '200':
+          description: Institutional groups with their domain association.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Group' } }
+  /v2/account/articles:
+    get:
+      tags: [Account]
+      operationId: listAccountArticles
+      summary: List the authenticated depositor's datasets
+      security: [ { tokenAuth: [] } ]
+      responses:
+        '200':
+          description: Datasets owned by the token holder.
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/DatasetSummary' } }
+        '403': { $ref: '#/components/responses/InvalidSessionToken' }
+components:
+  securitySchemes:
+    tokenAuth:
+      type: http
+      scheme: token
+      description: >-
+        `Authorization: token YOUR_TOKEN_HERE`. Tokens are issued from the depositor dashboard
+        after logging in; there is no OAuth 2.0 flow and no published scope vocabulary.
+  parameters:
+    Uuid:
+      name: uuid
+      in: path
+      required: true
+      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
+      schema: { type: string, format: uuid }
+  responses:
+    NotFound:
+      description: The resource does not exist.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          examples:
+            notFound: { value: { message: 'This resource does not exist.' } }
+    MethodNotAllowed:
+      description: The HTTP method is not permitted on this path.
+      content:
+        text/plain:
+          schema: { type: string }
+          examples:
+            postOnly: { value: "Acceptable methods: ['POST']" }
+    InvalidSessionToken:
+      description: No token, or an unrecognised token, was supplied.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          examples:
+            invalidToken:
+              value: { message: 'Invalid or unknown session token', code: InvalidSessionToken }
+  schemas:
+    DatasetSummary:
+      type: object
+      properties:
+        id: { type: [integer, 'null'], description: Legacy Figshare numeric id; null on djehuty-native records. }
+        uuid: { type: string, format: uuid }
+        title: { type: string }
+        doi: { type: string, description: 'DataCite DOI under the 10.4121 prefix.' }
+        handle: { type: [string, 'null'] }
+        url: { type: string, format: uri }
+        published_date: { type: [string, 'null'] }
+        thumb: { type: [string, 'null'] }
+        defined_type: { type: [integer, 'null'] }
+        defined_type_name: { type: [string, 'null'] }
+        group_id: { type: [integer, 'null'] }
+        url_private_api: { type: string, format: uri }
+        url_public_api: { type: string, format: uri }
+        url_private_html: { type: string, format: uri }
+        url_public_html: { type: string, format: uri }
+        timeline: { type: object }
+        resource_title: { type: [string, 'null'] }
+        resource_doi: { type: [string, 'null'] }
+    Dataset:
+      allOf:
+        - $ref: '#/components/schemas/DatasetSummary'
+        - type: object
+          properties:
+            files: { type: array, items: { $ref: '#/components/schemas/File' } }
+            authors: { type: array, items: { $ref: '#/components/schemas/Author' } }
+            custom_fields: { type: array }
+            description: { type: string }
+            funding: { type: [string, 'null'] }
+            funding_list: { type: array }
+            version: { type: integer }
+            status: { type: string }
+            size: { type: integer }
+            created_date: { type: [string, 'null'] }
+            modified_date: { type: [string, 'null'] }
+            is_public: { type: boolean }
+            is_confidential: { type: boolean }
+            is_metadata_record: { type: boolean }
+            license: { $ref: '#/components/schemas/License' }
+            tags: { type: array, items: { type: string } }
+            categories: { type: array, items: { $ref: '#/components/schemas/Category' } }
+            references: { type: array, items: { type: string } }
+            citation: { type: string }
+            is_embargoed: { type: boolean }
+            embargo_date: { type: [string, 'null'] }
+            embargo_type: { type: [string, 'null'] }
+            figshare_url: { type: string, format: uri }
+    File:
+      type: object
+      properties:
+        id: { type: [integer, 'null'] }
+        uuid: { type: string, format: uuid }
+        name: { type: string }
+        size: { type: integer }
+        is_link_only: { type: boolean }
+        is_incomplete: { type: boolean }
+        download_url: { type: string, format: uri }
+        supplied_md5: { type: [string, 'null'] }
+        computed_md5: { type: [string, 'null'] }
+    Author:
+      type: object
+      properties:
+        uuid: { type: string, format: uuid }
+        full_name: { type: string }
+        orcid_id: { type: [string, 'null'], description: 'ORCID iD, where the depositor supplied one.' }
+        is_active: { type: boolean }
+        url_name: { type: [string, 'null'] }
+    CollectionSummary:
+      type: object
+      properties:
+        id: { type: [integer, 'null'] }
+        uuid: { type: string, format: uuid }
+        title: { type: string }
+        doi: { type: string }
+        handle: { type: string }
+        url: { type: string, format: uri }
+        timeline: { type: object }
+        published_date: { type: [string, 'null'] }
+    License:
+      type: object
+      properties:
+        value: { type: integer }
+        name: { type: string }
+        url: { type: string, format: uri }
+        type: { type: string, enum: [data, software] }
+    Category:
+      type: object
+      properties:
+        id: { type: integer }
+        uuid: { type: string, format: uuid }
+        title: { type: string }
+        parent_id: { type: [integer, 'null'] }
+        parent_uuid: { type: [string, 'null'] }
+        path: { type: string }
+        source_id: { type: [integer, 'null'] }
+        taxonomy_id: { type: [integer, 'null'] }
+    Group:
+      type: object
+      properties:
+        id: { type: integer }
+        parent_id: { type: [integer, 'null'] }
+        name: { type: string }
+        association: { type: string, description: 'The partner institution domain, e.g. tudelft.nl.' }
+        is_featured: { type: boolean }
+    Error:
+      type: object
+      properties:
+        message: { type: string }
+        code: { type: string }
+x-artifact:
+  generated: '2026-08-19'
+  method: derived
+  source: >-
+    Derived from live unauthenticated probes of https://data.4tu.nl on 2026-08-19 (every path,
+    parameter, status code and field name in this document was observed in a real response),
+    cross-read against the djehuty API documentation at
+    https://raw.githubusercontent.com/4TUResearchData/djehuty/main/docs/api.md and
+    https://djehuty.4tu.nl/. 4TU.ResearchData publishes no OpenAPI of its own; the djehuty
+    repository tree contains no openapi/swagger file (checked via the GitHub trees API,
+    575 entries). This is API Evangelist's derivation, not a 4TU artifact.
+  x-operator: institution
+  x-operator-evidence: >-
+    data.4tu.nl -> 131.180.169.22, RIPE inetnum 131.180.0.0/16 netname DUNET,
+    org-name "Technische Universiteit Delft". re3data r3d100010216 lists TU Delft Library as
+    a hosting institution alongside the 4TU.Federation.

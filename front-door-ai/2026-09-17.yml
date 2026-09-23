@@ -1,0 +1,25 @@
+# Front Door AI Index — tu-delft — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: tu-delft
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: research.tudelft.nl
+  final_host: research.tudelft.nl
+  ownership: own
+  owner: tu-delft
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 1
+  host_score: 1
+  density: 1.55
+  words: 644
+  tiers:
+    agentic: 0
+    core: 1
+    model: 0
+  ambiguous: 0
+  top_terms:
+    AI: 1

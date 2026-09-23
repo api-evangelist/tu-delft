@@ -3,9 +3,7 @@ info:
   title: 4TU.ResearchData Datasets API
   version: v2+v3
   summary: Public read API for the 4TU.ResearchData repository operated by TU Delft Library.
-  description: 'Public, unauthenticated read interface to the 4TU.ResearchData repository at https://data.4tu.nl, the science/engineering/design research data repository of the 4TU.Federation. The service runs on `djehuty`, open-source repository software written by 4TU.ResearchData and Nikhef — it is NOT a Figshare, Elsevier Pure, Dataverse or DSpace tenancy. The `/v2` surface is deliberately backward compatible with the Figshare v2 API shape (differences: `uuid` supersedes `id`, and usage errors return precise HTTP codes rather than always 400); `/v3` is djehuty''s own surface. Endpoints under `/v2/account/` and parts of `/v3` require a personal API token.
-
-    OPERATOR NOTE: data.4tu.nl resolves to 131.180.169.22, inside the RIPE `DUNET` inetnum registered to Technische Universiteit Delft, and re3data records TU Delft Library as the hosting institution for the 4TU.Federation consortium (with TU Eindhoven, University of Twente and Wageningen University as the other partners). It is therefore institution-operated infrastructure that is co-owned by a four-university consortium, not a vendor platform.'
+  description: Public, unauthenticated read interface to the 4TU.ResearchData repository at https://data.4tu.nl, the science/engineering/design research data repository of the 4TU.Federation.
   contact:
     name: 4TU.ResearchData
     email: researchdata@4tu.nl
@@ -215,6 +213,25 @@ paths:
                   $ref: '#/components/schemas/DatasetSummary'
 components:
   schemas:
+    Author:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+        orcid_id:
+          type:
+          - string
+          - 'null'
+          description: ORCID iD, where the depositor supplied one.
+        is_active:
+          type: boolean
+        url_name:
+          type:
+          - string
+          - 'null'
     DatasetSummary:
       type: object
       properties:
@@ -309,75 +326,6 @@ components:
           type:
           - string
           - 'null'
-    License:
-      type: object
-      properties:
-        value:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-        type:
-          type: string
-          enum:
-          - data
-          - software
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
-    Author:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        full_name:
-          type: string
-        orcid_id:
-          type:
-          - string
-          - 'null'
-          description: ORCID iD, where the depositor supplied one.
-        is_active:
-          type: boolean
-        url_name:
-          type:
-          - string
-          - 'null'
-    Category:
-      type: object
-      properties:
-        id:
-          type: integer
-        uuid:
-          type: string
-          format: uuid
-        title:
-          type: string
-        parent_id:
-          type:
-          - integer
-          - 'null'
-        parent_uuid:
-          type:
-          - string
-          - 'null'
-        path:
-          type: string
-        source_id:
-          type:
-          - integer
-          - 'null'
-        taxonomy_id:
-          type:
-          - integer
-          - 'null'
     Dataset:
       allOf:
       - $ref: '#/components/schemas/DatasetSummary'
@@ -450,16 +398,66 @@ components:
           figshare_url:
             type: string
             format: uri
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+    License:
+      type: object
+      properties:
+        value:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+          enum:
+          - data
+          - software
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+          format: uuid
+        title:
+          type: string
+        parent_id:
+          type:
+          - integer
+          - 'null'
+        parent_uuid:
+          type:
+          - string
+          - 'null'
+        path:
+          type: string
+        source_id:
+          type:
+          - integer
+          - 'null'
+        taxonomy_id:
+          type:
+          - integer
+          - 'null'
+  parameters:
+    Uuid:
+      name: uuid
+      in: path
+      required: true
+      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
+      schema:
+        type: string
+        format: uuid
   responses:
-    MethodNotAllowed:
-      description: The HTTP method is not permitted on this path.
-      content:
-        text/plain:
-          schema:
-            type: string
-          examples:
-            postOnly:
-              value: 'Acceptable methods: [''POST'']'
     NotFound:
       description: The resource does not exist.
       content:
@@ -470,15 +468,15 @@ components:
             notFound:
               value:
                 message: This resource does not exist.
-  parameters:
-    Uuid:
-      name: uuid
-      in: path
-      required: true
-      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
-      schema:
-        type: string
-        format: uuid
+    MethodNotAllowed:
+      description: The HTTP method is not permitted on this path.
+      content:
+        text/plain:
+          schema:
+            type: string
+          examples:
+            postOnly:
+              value: 'Acceptable methods: [''POST'']'
   securitySchemes:
     tokenAuth:
       type: http
