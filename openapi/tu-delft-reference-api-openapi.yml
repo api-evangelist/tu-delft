@@ -67,37 +67,6 @@ paths:
                   $ref: '#/components/schemas/Group'
 components:
   schemas:
-    Group:
-      type: object
-      properties:
-        id:
-          type: integer
-        parent_id:
-          type:
-          - integer
-          - 'null'
-        name:
-          type: string
-        association:
-          type: string
-          description: The partner institution domain, e.g. tudelft.nl.
-        is_featured:
-          type: boolean
-    License:
-      type: object
-      properties:
-        value:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-        type:
-          type: string
-          enum:
-          - data
-          - software
     Category:
       type: object
       properties:
@@ -126,6 +95,37 @@ components:
           type:
           - integer
           - 'null'
+    License:
+      type: object
+      properties:
+        value:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+          enum:
+          - data
+          - software
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+        parent_id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        association:
+          type: string
+          description: The partner institution domain, e.g. tudelft.nl.
+        is_featured:
+          type: boolean
   securitySchemes:
     tokenAuth:
       type: http

@@ -63,14 +63,18 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            notFound:
+              value:
+                message: This resource does not exist.
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     CollectionSummary:
       type: object
       properties:
@@ -96,17 +100,13 @@ components:
           type:
           - string
           - 'null'
-  responses:
-    NotFound:
-      description: The resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            notFound:
-              value:
-                message: This resource does not exist.
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
   parameters:
     Uuid:
       name: uuid

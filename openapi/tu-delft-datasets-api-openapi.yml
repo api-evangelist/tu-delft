@@ -212,26 +212,60 @@ paths:
                 items:
                   $ref: '#/components/schemas/DatasetSummary'
 components:
+  parameters:
+    Uuid:
+      name: uuid
+      in: path
+      required: true
+      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
+      schema:
+        type: string
+        format: uuid
   schemas:
-    Author:
+    File:
       type: object
       properties:
+        id:
+          type:
+          - integer
+          - 'null'
         uuid:
           type: string
           format: uuid
-        full_name:
+        name:
           type: string
-        orcid_id:
-          type:
-          - string
-          - 'null'
-          description: ORCID iD, where the depositor supplied one.
-        is_active:
+        size:
+          type: integer
+        is_link_only:
           type: boolean
-        url_name:
+        is_incomplete:
+          type: boolean
+        download_url:
+          type: string
+          format: uri
+        supplied_md5:
           type:
           - string
           - 'null'
+        computed_md5:
+          type:
+          - string
+          - 'null'
+    License:
+      type: object
+      properties:
+        value:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+          enum:
+          - data
+          - software
     DatasetSummary:
       type: object
       properties:
@@ -297,34 +331,33 @@ components:
           type:
           - string
           - 'null'
-    File:
+    Category:
       type: object
       properties:
         id:
-          type:
-          - integer
-          - 'null'
+          type: integer
         uuid:
           type: string
           format: uuid
-        name:
+        title:
           type: string
-        size:
-          type: integer
-        is_link_only:
-          type: boolean
-        is_incomplete:
-          type: boolean
-        download_url:
-          type: string
-          format: uri
-        supplied_md5:
+        parent_id:
+          type:
+          - integer
+          - 'null'
+        parent_uuid:
           type:
           - string
           - 'null'
-        computed_md5:
+        path:
+          type: string
+        source_id:
           type:
-          - string
+          - integer
+          - 'null'
+        taxonomy_id:
+          type:
+          - integer
           - 'null'
     Dataset:
       allOf:
@@ -398,6 +431,25 @@ components:
           figshare_url:
             type: string
             format: uri
+    Author:
+      type: object
+      properties:
+        uuid:
+          type: string
+          format: uuid
+        full_name:
+          type: string
+        orcid_id:
+          type:
+          - string
+          - 'null'
+          description: ORCID iD, where the depositor supplied one.
+        is_active:
+          type: boolean
+        url_name:
+          type:
+          - string
+          - 'null'
     Error:
       type: object
       properties:
@@ -405,59 +457,16 @@ components:
           type: string
         code:
           type: string
-    License:
-      type: object
-      properties:
-        value:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-        type:
-          type: string
-          enum:
-          - data
-          - software
-    Category:
-      type: object
-      properties:
-        id:
-          type: integer
-        uuid:
-          type: string
-          format: uuid
-        title:
-          type: string
-        parent_id:
-          type:
-          - integer
-          - 'null'
-        parent_uuid:
-          type:
-          - string
-          - 'null'
-        path:
-          type: string
-        source_id:
-          type:
-          - integer
-          - 'null'
-        taxonomy_id:
-          type:
-          - integer
-          - 'null'
-  parameters:
-    Uuid:
-      name: uuid
-      in: path
-      required: true
-      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
-      schema:
-        type: string
-        format: uuid
   responses:
+    MethodNotAllowed:
+      description: The HTTP method is not permitted on this path.
+      content:
+        text/plain:
+          schema:
+            type: string
+          examples:
+            postOnly:
+              value: 'Acceptable methods: [''POST'']'
     NotFound:
       description: The resource does not exist.
       content:
@@ -468,15 +477,6 @@ components:
             notFound:
               value:
                 message: This resource does not exist.
-    MethodNotAllowed:
-      description: The HTTP method is not permitted on this path.
-      content:
-        text/plain:
-          schema:
-            type: string
-          examples:
-            postOnly:
-              value: 'Acceptable methods: [''POST'']'
   securitySchemes:
     tokenAuth:
       type: http
