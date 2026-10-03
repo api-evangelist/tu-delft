@@ -67,6 +67,21 @@ paths:
                   $ref: '#/components/schemas/Group'
 components:
   schemas:
+    License:
+      type: object
+      properties:
+        value:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+          enum:
+          - data
+          - software
     Category:
       type: object
       properties:
@@ -95,21 +110,6 @@ components:
           type:
           - integer
           - 'null'
-    License:
-      type: object
-      properties:
-        value:
-          type: integer
-        name:
-          type: string
-        url:
-          type: string
-          format: uri
-        type:
-          type: string
-          enum:
-          - data
-          - software
     Group:
       type: object
       properties:

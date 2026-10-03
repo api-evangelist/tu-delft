@@ -222,6 +222,21 @@ components:
         type: string
         format: uuid
   schemas:
+    License:
+      type: object
+      properties:
+        value:
+          type: integer
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+          enum:
+          - data
+          - software
     File:
       type: object
       properties:
@@ -251,21 +266,34 @@ components:
           type:
           - string
           - 'null'
-    License:
+    Category:
       type: object
       properties:
-        value:
+        id:
           type: integer
-        name:
+        uuid:
           type: string
-        url:
+          format: uuid
+        title:
           type: string
-          format: uri
-        type:
+        parent_id:
+          type:
+          - integer
+          - 'null'
+        parent_uuid:
+          type:
+          - string
+          - 'null'
+        path:
           type: string
-          enum:
-          - data
-          - software
+        source_id:
+          type:
+          - integer
+          - 'null'
+        taxonomy_id:
+          type:
+          - integer
+          - 'null'
     DatasetSummary:
       type: object
       properties:
@@ -331,33 +359,31 @@ components:
           type:
           - string
           - 'null'
-    Category:
+    Error:
       type: object
       properties:
-        id:
-          type: integer
+        message:
+          type: string
+        code:
+          type: string
+    Author:
+      type: object
+      properties:
         uuid:
           type: string
           format: uuid
-        title:
+        full_name:
           type: string
-        parent_id:
-          type:
-          - integer
-          - 'null'
-        parent_uuid:
+        orcid_id:
           type:
           - string
           - 'null'
-        path:
-          type: string
-        source_id:
+          description: ORCID iD, where the depositor supplied one.
+        is_active:
+          type: boolean
+        url_name:
           type:
-          - integer
-          - 'null'
-        taxonomy_id:
-          type:
-          - integer
+          - string
           - 'null'
     Dataset:
       allOf:
@@ -431,32 +457,6 @@ components:
           figshare_url:
             type: string
             format: uri
-    Author:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        full_name:
-          type: string
-        orcid_id:
-          type:
-          - string
-          - 'null'
-          description: ORCID iD, where the depositor supplied one.
-        is_active:
-          type: boolean
-        url_name:
-          type:
-          - string
-          - 'null'
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
   responses:
     MethodNotAllowed:
       description: The HTTP method is not permitted on this path.
