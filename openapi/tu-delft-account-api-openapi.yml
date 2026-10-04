@@ -39,18 +39,6 @@ paths:
         '403':
           $ref: '#/components/responses/InvalidSessionToken'
 components:
-  responses:
-    InvalidSessionToken:
-      description: No token, or an unrecognised token, was supplied.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            invalidToken:
-              value:
-                message: Invalid or unknown session token
-                code: InvalidSessionToken
   schemas:
     DatasetSummary:
       type: object
@@ -124,6 +112,18 @@ components:
           type: string
         code:
           type: string
+  responses:
+    InvalidSessionToken:
+      description: No token, or an unrecognised token, was supplied.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            invalidToken:
+              value:
+                message: Invalid or unknown session token
+                code: InvalidSessionToken
   securitySchemes:
     tokenAuth:
       type: http
