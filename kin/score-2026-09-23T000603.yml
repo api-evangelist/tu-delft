@@ -1,21 +1,19 @@
-# Kin Score artifact — tu-delft — 2026-08-27T103455
+# Kin Score artifact — tu-delft — 2026-09-23T000603
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: tu-delft
-  schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T103455
-  composite: 63.3
+  schema_version: 0.22.0
+  scored_at: '2026-09-23'
+  run_ts: 2026-09-23T000603
+  composite: 65.2
   band: strong
   facets:
-    discoverability: 85.2
-    contract_quality: 68.0
-    governance: 67.4
-    operational_transparency: 23.7
-    developer_ergonomics: 35.7
-    commercial_clarity: 50.0
+    discoverability: 79.6
+    contract_quality: 64.1
     contract_governance: 67.4
+    operational_transparency: 50.0
+    developer_ergonomics: 35.7
     access_clarity: 50.0
   agent_readiness:
     score: 19.2
@@ -49,7 +47,7 @@ kin_score:
   provenance:
     conformance: first-party
     contracts:
-      total: 1
+      total: 4
       derived: 0
       coverage: 0.0
       callable: 100.0
