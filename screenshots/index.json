@@ -1,0 +1,11 @@
+[
+  {
+    "repo": "tu-delft",
+    "captured_at": "2026-10-11T194130",
+    "source_url": "https://www.tudelft.nl/",
+    "source_type": "Website",
+    "file": "tu-delft-2026-10-11T194130.png",
+    "bytes": 350653,
+    "capture": "playwright-local"
+  }
+]
