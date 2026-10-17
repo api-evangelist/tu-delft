@@ -63,34 +63,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    Uuid:
-      name: uuid
-      in: path
-      required: true
-      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
-      schema:
-        type: string
-        format: uuid
-  responses:
-    NotFound:
-      description: The resource does not exist.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-          examples:
-            notFound:
-              value:
-                message: This resource does not exist.
   schemas:
-    Error:
-      type: object
-      properties:
-        message:
-          type: string
-        code:
-          type: string
     CollectionSummary:
       type: object
       properties:
@@ -116,6 +89,33 @@ components:
           type:
           - string
           - 'null'
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: string
+  responses:
+    NotFound:
+      description: The resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            notFound:
+              value:
+                message: This resource does not exist.
+  parameters:
+    Uuid:
+      name: uuid
+      in: path
+      required: true
+      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
+      schema:
+        type: string
+        format: uuid
   securitySchemes:
     tokenAuth:
       type: http

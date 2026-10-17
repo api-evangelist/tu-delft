@@ -213,13 +213,86 @@ paths:
                   $ref: '#/components/schemas/DatasetSummary'
 components:
   schemas:
-    Error:
+    License:
       type: object
       properties:
-        message:
+        value:
+          type: integer
+        name:
           type: string
-        code:
+        url:
           type: string
+          format: uri
+        type:
+          type: string
+          enum:
+          - data
+          - software
+    DatasetSummary:
+      type: object
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+          description: Legacy Figshare numeric id; null on djehuty-native records.
+        uuid:
+          type: string
+          format: uuid
+        title:
+          type: string
+        doi:
+          type: string
+          description: DataCite DOI under the 10.4121 prefix.
+        handle:
+          type:
+          - string
+          - 'null'
+        url:
+          type: string
+          format: uri
+        published_date:
+          type:
+          - string
+          - 'null'
+        thumb:
+          type:
+          - string
+          - 'null'
+        defined_type:
+          type:
+          - integer
+          - 'null'
+        defined_type_name:
+          type:
+          - string
+          - 'null'
+        group_id:
+          type:
+          - integer
+          - 'null'
+        url_private_api:
+          type: string
+          format: uri
+        url_public_api:
+          type: string
+          format: uri
+        url_private_html:
+          type: string
+          format: uri
+        url_public_html:
+          type: string
+          format: uri
+        timeline:
+          type: object
+        resource_title:
+          type:
+          - string
+          - 'null'
+        resource_doi:
+          type:
+          - string
+          - 'null'
     Dataset:
       allOf:
       - $ref: '#/components/schemas/DatasetSummary'
@@ -292,21 +365,13 @@ components:
           figshare_url:
             type: string
             format: uri
-    License:
+    Error:
       type: object
       properties:
-        value:
-          type: integer
-        name:
+        message:
           type: string
-        url:
+        code:
           type: string
-          format: uri
-        type:
-          type: string
-          enum:
-          - data
-          - software
     Category:
       type: object
       properties:
@@ -334,25 +399,6 @@ components:
         taxonomy_id:
           type:
           - integer
-          - 'null'
-    Author:
-      type: object
-      properties:
-        uuid:
-          type: string
-          format: uuid
-        full_name:
-          type: string
-        orcid_id:
-          type:
-          - string
-          - 'null'
-          description: ORCID iD, where the depositor supplied one.
-        is_active:
-          type: boolean
-        url_name:
-          type:
-          - string
           - 'null'
     File:
       type: object
@@ -383,71 +429,34 @@ components:
           type:
           - string
           - 'null'
-    DatasetSummary:
+    Author:
       type: object
       properties:
-        id:
-          type:
-          - integer
-          - 'null'
-          description: Legacy Figshare numeric id; null on djehuty-native records.
         uuid:
           type: string
           format: uuid
-        title:
+        full_name:
           type: string
-        doi:
-          type: string
-          description: DataCite DOI under the 10.4121 prefix.
-        handle:
+        orcid_id:
           type:
           - string
           - 'null'
-        url:
-          type: string
-          format: uri
-        published_date:
+          description: ORCID iD, where the depositor supplied one.
+        is_active:
+          type: boolean
+        url_name:
           type:
           - string
           - 'null'
-        thumb:
-          type:
-          - string
-          - 'null'
-        defined_type:
-          type:
-          - integer
-          - 'null'
-        defined_type_name:
-          type:
-          - string
-          - 'null'
-        group_id:
-          type:
-          - integer
-          - 'null'
-        url_private_api:
-          type: string
-          format: uri
-        url_public_api:
-          type: string
-          format: uri
-        url_private_html:
-          type: string
-          format: uri
-        url_public_html:
-          type: string
-          format: uri
-        timeline:
-          type: object
-        resource_title:
-          type:
-          - string
-          - 'null'
-        resource_doi:
-          type:
-          - string
-          - 'null'
+  parameters:
+    Uuid:
+      name: uuid
+      in: path
+      required: true
+      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
+      schema:
+        type: string
+        format: uuid
   responses:
     MethodNotAllowed:
       description: The HTTP method is not permitted on this path.
@@ -468,15 +477,6 @@ components:
             notFound:
               value:
                 message: This resource does not exist.
-  parameters:
-    Uuid:
-      name: uuid
-      in: path
-      required: true
-      description: The dataset or collection UUID. On this repository `uuid` supersedes the Figshare numeric `id`.
-      schema:
-        type: string
-        format: uuid
   securitySchemes:
     tokenAuth:
       type: http
